@@ -1,0 +1,6 @@
+../resources/textures/lava.png
+../resources/textures/stoneTileFloor.jpg
+../resources/textures/blueSquare.png
+../resources/textures/greenSquare.png
+../resources/textures/yellowSquare.png
+../resources/textures/purpleSquare.png

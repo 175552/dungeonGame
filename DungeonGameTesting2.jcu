@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace_user>
+	<active_project>
+		<label>DungeonGameTesting</label>
+	</active_project>
+	<projects>
+		<project>
+			<label>DungeonGameTesting</label>
+			<showfiles>false</showfiles>
+			<folderitem>
+				<path>src</path>
+			</folderitem>
+			<folderitem>
+				<path>src\World Files</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Entity Files</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Display Files</path>
+			</folderitem>
+		</project>
+	</projects>
+	<open_files>
+		<docitem>
+			<path>src\Entity Files\Hitbox.java</path>
+			<source>true</source>
+			<index>0</index>
+			<active>true</active>
+		</docitem>
+	</open_files>
+</workspace_user>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>DungeonGameTesting</label>
+	</settings>
+	<users>
+		<user>
+			<path>DungeonGameTesting.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>DungeonGameTesting.jcp</path>
+		</project>
+	</projects>
+</workspace>
