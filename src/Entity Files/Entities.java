@@ -5,6 +5,8 @@ abstract class Entities {
 	int xPos, yPos, movespeed, xOffset, yOffset;			//Position and movement information
 
 	int HP, baseATK, baseATKSPD, baseDEF;
+	
+	boolean attacksUp, attacksDown, attacksLeft, attacksRight;
 
 	BufferedImage sprite;
 //////////////////////////////////////////////////////////Getter Methods
@@ -19,6 +21,9 @@ abstract class Entities {
 	}
 	int getYOffset(){
 		return yOffset;
+	}
+	BufferedImage getSprite(){
+		return sprite;
 	}
 //////////////////////////////////////////////////////////////////////////Movement methods
 	void moveUp(){
@@ -95,14 +100,21 @@ abstract class Entities {
 		}catch(Exception e){return false;}
 	}
 ///////////////////////////////////////////////////////////////////////////////Combat methods
-	void attack(ArrayList<Entities> hitEntities){
-
-	}
-	ArrayList<Entities> checkHitEntities(){
-		ArrayList<Entities> hitEntities = new ArrayList<Entities>();
+	ArrayList<Entities> attack(){
+		if(attacksUp){
+			
+		}
+		else if(attacksDown){
+			
+		}
+		else if(attacksLeft){
+			
+		}
+		else if(attacksRight){
+			
+		}
 		return null;
 	}
-	BufferedImage getSprite(){
-		return sprite;
+	void doAttackEffects(ArrayList<Entities> hitEntities){
 	}
 }

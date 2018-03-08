@@ -3,6 +3,8 @@ import java.awt.image.*;
 import java.io.*;
 
 public class Player extends Entities {
+	
+	boolean movesUp, movesDown, movesLeft, movesRight;
 
 	Player(){
 		xPos = 25;

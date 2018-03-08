@@ -20,9 +20,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	BufferedImage worldImage, playerImage;
 
 	Player p1 = new Player();
-	boolean movesUp, movesDown, movesLeft, movesRight;
 
 	Action upStart, upEnd, downStart, downEnd, leftStart, leftEnd, rightStart, rightEnd;
+	Action upAS, upAE, downAS, downAE, leftAS, leftAE, rightAS, rightAE;
 
 	Set<String> keysList = new HashSet<String>();
 
@@ -39,47 +39,89 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 		enemyList.add(new Enemies());
 
-////////////////////////////////////////////////////////////////////////////////////////////Create Actions for keybindings.
+////////////////////////////////////////////////////////////////////////////////////////////Create actions for movement
 		upStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesUp = true;
+				p1.movesUp = true;
 			}
 		};
 		upEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesUp = false;
+				p1.movesUp = false;
 			}
 		};
 		downStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesDown = true;
+				p1.movesDown = true;
 			}
 		};
 		downEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesDown = false;
+				p1.movesDown = false;
 			}
 		};
 		leftStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesLeft = true;
+				p1.movesLeft = true;
 			}
 		};
 		leftEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesLeft = false;
+				p1.movesLeft = false;
 			}
 		};
 		rightStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesRight = true;
+				p1.movesRight = true;
 			}
 		};
 		rightEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				movesRight = false;
+				p1.movesRight = false;
 			}
 		};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////Actions for attacking
+		upAS = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksUp = true;
+			}
+		};
+		upAE = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksUp = false;
+			}
+		};
+		downAS = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksDown = true;
+			}
+		};
+		downAE = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksDown = false;
+			}
+		};
+		leftAS = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksLeft = true;
+			}
+		};
+		leftAE = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksLeft = false;
+			}
+		};
+		rightAS = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksRight = true;
+			}
+		};
+		rightAE = new AbstractAction(){
+			public void actionPerformed(ActionEvent e){
+				p1.attacksRight = false;
+			}
+		};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Keybinds for movement
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "Up Start");
 		getActionMap().put("Up Start", upStart);
 
@@ -103,36 +145,75 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "Right End");
 		getActionMap().put("Right End", rightEnd);
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////Keybinds for attacking
+		
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "Up AStart");
+		getActionMap().put("Up AStart", upAS);
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "Up AEnd");
+		getActionMap().put("Up AEnd", upAE);
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "Down AStart");
+		getActionMap().put("Down AStart", downAS);
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "Down AEnd");
+		getActionMap().put("Down AEnd", downAE);
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "Left AStart");
+		getActionMap().put("Left AStart", leftAS);
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "Left AEnd");
+		getActionMap().put("Left AEnd", leftAE);
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "Right AStart");
+		getActionMap().put("Right AStart", rightAS);
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "Right AEnd");
+		getActionMap().put("Right AEnd", rightAE);
 	}
 ////////////////////////////////////////////////////////////////////////////////////////////////Action Listener for updating stuff.
 	public void actionPerformed(ActionEvent e){
 ////////////////////////////////////////////////////////////////////////////////////////////////For normal movement
-		if(movesUp && p1.checkUp()){
+		if(p1.movesUp && p1.checkUp()){
 			p1.moveUp();
 		}
-		else if(movesDown && p1.checkDown()){
+		else if(p1.movesDown && p1.checkDown()){
 			p1.moveDown();
 		}
-		if(movesLeft && p1.checkLeft()){
+		if(p1.movesLeft && p1.checkLeft()){
 			p1.moveLeft();
 		}
-		else if(movesRight && p1.checkRight()){
+		else if(p1.movesRight && p1.checkRight()){
 			p1.moveRight();
 		}
 ////////////////////////////////////////////////////////////////////////////////////////////For exact movement to line up with obstacles
-		if(movesUp && !p1.checkUp()){
+		if(p1.movesUp && !p1.checkUp()){
 			p1.moveUpDis((p1.getY() - p1.getYOffset()) % World.cellSize);
 		}
-		else if(movesDown && !p1.checkDown()){
+		else if(p1.movesDown && !p1.checkDown()){
 			if((p1.getY() + p1.getYOffset()) % World.cellSize != 0)
 				p1.moveDownDis(World.cellSize - ((p1.getY() + p1.getYOffset()) % World.cellSize));
 		}
-		if(movesLeft && !p1.checkLeft()){
+		if(p1.movesLeft && !p1.checkLeft()){
 			p1.moveLeftDis((p1.getX() - p1.getXOffset()) % World.cellSize);
 		}
-		else if(movesRight && !p1.checkRight()){
+		else if(p1.movesRight && !p1.checkRight()){
 			if((p1.getX() + p1.getXOffset()) % World.cellSize != 0)
 				p1.moveRightDis(World.cellSize - ((p1.getX() + p1.getXOffset()) % World.cellSize));
+		}
+/////////////////////////////////////////////////////////////////////////////////////////////For controlling player attacks
+		if(p1.attacksUp){
+			
+		}
+		else if(p1.attacksDown){
+			
+		}
+		else if(p1.attacksLeft){
+			
+		}
+		else if(p1.attacksRight){
+			
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Makes each enemy chase player
 		for(int i = 0; i < enemyList.size(); i++){
