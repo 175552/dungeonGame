@@ -1,3 +1,7 @@
 
-abstract class Daggers extends Weapons {
+class Daggers extends Weapons {
+
+	Daggers(){
+		hb = new DaggerHitboxes();
+	}
 }

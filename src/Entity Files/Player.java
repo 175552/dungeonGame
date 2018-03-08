@@ -3,7 +3,7 @@ import java.awt.image.*;
 import java.io.*;
 
 public class Player extends Entities {
-	
+
 	boolean movesUp, movesDown, movesLeft, movesRight;
 
 	Player(){
@@ -12,6 +12,8 @@ public class Player extends Entities {
 		movespeed = 5;
 		xOffset = 25;
 		yOffset = 25;
+
+		activeWeapon = new BasicDagger();
 
 		try{
 			sprite = ImageIO.read(new File("../resources/textures/blueSquare.png"));

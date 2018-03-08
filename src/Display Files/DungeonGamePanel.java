@@ -145,31 +145,31 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "Right End");
 		getActionMap().put("Right End", rightEnd);
-		
+
 		////////////////////////////////////////////////////////////////////////////////////////////////Keybinds for attacking
-		
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "Up AStart");
+
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), "Up AStart");
 		getActionMap().put("Up AStart", upAS);
 
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "Up AEnd");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, true), "Up AEnd");
 		getActionMap().put("Up AEnd", upAE);
 
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "Down AStart");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), "Down AStart");
 		getActionMap().put("Down AStart", downAS);
 
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "Down AEnd");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, true), "Down AEnd");
 		getActionMap().put("Down AEnd", downAE);
 
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, false), "Left AStart");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, false), "Left AStart");
 		getActionMap().put("Left AStart", leftAS);
 
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "Left AEnd");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0, true), "Left AEnd");
 		getActionMap().put("Left AEnd", leftAE);
 
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, false), "Right AStart");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, false), "Right AStart");
 		getActionMap().put("Right AStart", rightAS);
 
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "Right AEnd");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "Right AEnd");
 		getActionMap().put("Right AEnd", rightAE);
 	}
 ////////////////////////////////////////////////////////////////////////////////////////////////Action Listener for updating stuff.
@@ -204,16 +204,16 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////For controlling player attacks
 		if(p1.attacksUp){
-			
+			p1.attack();
 		}
 		else if(p1.attacksDown){
-			
+			p1.attack();
 		}
 		else if(p1.attacksLeft){
-			
+			p1.attack();
 		}
 		else if(p1.attacksRight){
-			
+			p1.attack();
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Makes each enemy chase player
 		for(int i = 0; i < enemyList.size(); i++){
@@ -227,7 +227,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		super.paintComponent(g);
 		g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
 		g.drawImage(p1.getSprite(), p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
-		drawEnemies(g);
+		//drawEnemies(g);
 	}
 
 	private void drawWorld(){

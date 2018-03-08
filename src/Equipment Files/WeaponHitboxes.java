@@ -1,5 +1,9 @@
 import java.awt.geom.*;
 
-public class WeaponHitboxes extends Area{	
+abstract class WeaponHitboxes{
 	Area[] hitboxes = new Area[4];
+
+	Area get(int index){
+		return hitboxes[index];
+	}
 }

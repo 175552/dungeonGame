@@ -42,10 +42,6 @@
 				<path>src\Equipment Files</path>
 			</folderitem>
 			<fileitem>
-				<path>src\BasicDagger.java</path>
-				<folder>src</folder>
-			</fileitem>
-			<fileitem>
 				<path>src\World Files\Cell.java</path>
 				<folder>src\World Files</folder>
 			</fileitem>
@@ -92,6 +88,10 @@
 			<fileitem>
 				<path>src\Display Files\GamePanels.java</path>
 				<folder>src\Display Files</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\BasicDagger.java</path>
+				<folder>src\Equipment Files</folder>
 			</fileitem>
 			<fileitem>
 				<path>src\Equipment Files\DaggerHitboxes.java</path>

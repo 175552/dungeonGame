@@ -2,9 +2,9 @@ import java.awt.geom.*;
 import java.awt.*;
 
 public class DaggerHitboxes extends WeaponHitboxes {
-	
-	double center = 10, size = 50, offset = center;
-	
+
+	double center = 10, size = 70, offset = 10;
+
 	DaggerHitboxes(){
 		Area base = new Area(new Ellipse2D.Double(center, center, size, size));
 		for(int i = 0; i < 4; i++){

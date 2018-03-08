@@ -1,14 +1,20 @@
 import java.util.*;
+import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.*;
 
 abstract class Entities {
 	int xPos, yPos, movespeed, xOffset, yOffset;			//Position and movement information
 
 	int HP, baseATK, baseATKSPD, baseDEF;
-	
-	boolean attacksUp, attacksDown, attacksLeft, attacksRight;
+
+	boolean attacksUp, attacksDown, attacksLeft, attacksRight, attacking;
 
 	BufferedImage sprite;
+
+	Area attackHitbox;
+
+	Weapons activeWeapon;
 //////////////////////////////////////////////////////////Getter Methods
 	int getX(){
 		return xPos;
@@ -100,21 +106,39 @@ abstract class Entities {
 		}catch(Exception e){return false;}
 	}
 ///////////////////////////////////////////////////////////////////////////////Combat methods
-	ArrayList<Entities> attack(){
+
+	void attack(){
 		if(attacksUp){
-			
+			attackHitbox = activeWeapon.getHitboxes().get(0);
+			attacksDown = false;
+			attacksLeft = false;
+			attacksRight = false;
+			attacking = true;
 		}
 		else if(attacksDown){
-			
+			attackHitbox = activeWeapon.getHitboxes().get(1);
+			attacksUp = false;
+			attacksLeft = false;
+			attacksRight = false;
+			attacking = true;
 		}
 		else if(attacksLeft){
-			
+			attackHitbox = activeWeapon.getHitboxes().get(2);
+			attacksDown = false;
+			attacksUp = false;
+			attacksRight = false;
+			attacking = true;
 		}
 		else if(attacksRight){
-			
+			attackHitbox = activeWeapon.getHitboxes().get(3);
+			attacksDown = false;
+			attacksLeft = false;
+			attacksUp = false;
+			attacking = true;
 		}
-		return null;
 	}
-	void doAttackEffects(ArrayList<Entities> hitEntities){
+	boolean isAttacking(){
+		return attacking;
 	}
+
 }

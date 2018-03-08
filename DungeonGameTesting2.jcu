@@ -27,10 +27,10 @@
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\Equipment Files\DaggerHitboxes.java</path>
+			<path>src\Entity Files\Entities.java</path>
 			<source>true</source>
 			<index>0</index>
-			<active>false</active>
+			<active>true</active>
 		</docitem>
 		<docitem>
 			<path>src\Display Files\DungeonGamePanel.java</path>
@@ -39,15 +39,9 @@
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Entity Files\Player.java</path>
+			<path>src\Equipment Files\DaggerHitboxes.java</path>
 			<source>true</source>
 			<index>2</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Entity Files\Entities.java</path>
-			<source>true</source>
-			<index>3</index>
 			<active>false</active>
 		</docitem>
 	</open_files>
