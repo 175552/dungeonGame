@@ -8,7 +8,7 @@ abstract class Entities {
 
 	int HP, baseATK, baseATKSPD, baseDEF;
 
-	boolean attacksUp, attacksDown, attacksLeft, attacksRight, attacking;
+	boolean attacksUp, attacksDown, attacksLeft, attacksRight;
 
 	BufferedImage sprite;
 
@@ -30,6 +30,12 @@ abstract class Entities {
 	}
 	BufferedImage getSprite(){
 		return sprite;
+	}
+	Area getAttackHitbox(){
+		return attackHitbox;
+	}
+	Weapons getWeapon(){
+		return activeWeapon;
 	}
 //////////////////////////////////////////////////////////////////////////Movement methods
 	void moveUp(){
@@ -106,39 +112,32 @@ abstract class Entities {
 		}catch(Exception e){return false;}
 	}
 ///////////////////////////////////////////////////////////////////////////////Combat methods
-
-	void attack(){
-		if(attacksUp){
-			attackHitbox = activeWeapon.getHitboxes().get(0);
-			attacksDown = false;
-			attacksLeft = false;
-			attacksRight = false;
-			attacking = true;
-		}
-		else if(attacksDown){
-			attackHitbox = activeWeapon.getHitboxes().get(1);
-			attacksUp = false;
-			attacksLeft = false;
-			attacksRight = false;
-			attacking = true;
-		}
-		else if(attacksLeft){
-			attackHitbox = activeWeapon.getHitboxes().get(2);
-			attacksDown = false;
-			attacksUp = false;
-			attacksRight = false;
-			attacking = true;
-		}
-		else if(attacksRight){
-			attackHitbox = activeWeapon.getHitboxes().get(3);
-			attacksDown = false;
-			attacksLeft = false;
-			attacksUp = false;
-			attacking = true;
-		}
+	void attackUp(){
+		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		attackHitbox = activeWeapon.getHitboxes().get(0);
+		attacksDown = false;
+		attacksLeft = false;
+		attacksRight = false;
 	}
-	boolean isAttacking(){
-		return attacking;
+	void attackDown(){
+		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		attackHitbox = activeWeapon.getHitboxes().get(1);
+		attacksUp = false;
+		attacksLeft = false;
+		attacksRight = false;
 	}
-
+	void attackLeft(){
+		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		attackHitbox = activeWeapon.getHitboxes().get(2);
+		attacksDown = false;
+		attacksUp = false;
+		attacksRight = false;
+	}
+	void attackRight(){
+		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		attackHitbox = activeWeapon.getHitboxes().get(3);
+		attacksDown = false;
+		attacksLeft = false;
+		attacksUp = false;
+	}
 }

@@ -202,24 +202,12 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			if((p1.getX() + p1.getXOffset()) % World.cellSize != 0)
 				p1.moveRightDis(World.cellSize - ((p1.getX() + p1.getXOffset()) % World.cellSize));
 		}
-/////////////////////////////////////////////////////////////////////////////////////////////For controlling player attacks
-		if(p1.attacksUp){
-			p1.attack();
-		}
-		else if(p1.attacksDown){
-			p1.attack();
-		}
-		else if(p1.attacksLeft){
-			p1.attack();
-		}
-		else if(p1.attacksRight){
-			p1.attack();
-		}
 /////////////////////////////////////////////////////////////////////////////////////////Makes each enemy chase player
 		for(int i = 0; i < enemyList.size(); i++){
 			enemyList.get(i).checkCurrentPos(p1);
 			enemyList.get(i).chasePlayer(p1);
 		}
+/////////////////////////////////////////////////////////////////////////////////////////For handling attacks
 		repaint();
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////Draw player and world image
@@ -228,6 +216,23 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
 		g.drawImage(p1.getSprite(), p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
 		//drawEnemies(g);
+		Graphics2D g2 = (Graphics2D)g.create();
+		g2.setColor(Color.white);
+		if(p1.attacksUp){
+			p1.attackUp();
+		}
+		else if(p1.attacksDown){
+			p1.attackDown();
+		}
+		else if(p1.attacksLeft){
+			p1.attackLeft();
+		}
+		else if(p1.attacksRight){
+			p1.attackRight();
+		}
+		if(p1.attacksUp || p1.attacksLeft || p1.attacksRight || p1.attacksDown){
+			g2.fill(p1.getAttackHitbox());
+		}
 	}
 
 	private void drawWorld(){
