@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class DaggerHitboxes extends WeaponHitboxes {
 
-	double size = 70, offset = 5, cx = 10, cy = 10;
+	double size = 100, offset = 7, cx = 10, cy = 10;
 
 	DaggerHitboxes(){
 		Area base = new Area(new Ellipse2D.Double(cx, cy, size, size));
@@ -25,7 +25,9 @@ public class DaggerHitboxes extends WeaponHitboxes {
 			}
 		}
 	}
-	void moveHitbox(int x, int y){
+	void moveHitbox(Entities e, int x, int y){
+		x -= ((size/2) - e.getXOffset());
+		y -= ((size/2) - e.getYOffset());
 		Area base = new Area(new Ellipse2D.Double(x, y, size, size));
 		for(int i = 0; i < 4; i++){
 			hitboxes[i] = new Area(base);

@@ -121,6 +121,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 				p1.attacksRight = false;
 			}
 		};
+		
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Keybinds for movement
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "Up Start");
 		getActionMap().put("Up Start", upStart);
@@ -172,6 +173,11 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "Right AEnd");
 		getActionMap().put("Right AEnd", rightAE);
 	}
+	
+	
+	
+	
+	
 ////////////////////////////////////////////////////////////////////////////////////////////////Action Listener for updating stuff.
 	public void actionPerformed(ActionEvent e){
 ////////////////////////////////////////////////////////////////////////////////////////////////For normal movement
@@ -210,6 +216,15 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 /////////////////////////////////////////////////////////////////////////////////////////For handling attacks
 		repaint();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////Draw player and world image
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -234,6 +249,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			g2.fill(p1.getAttackHitbox());
 		}
 	}
+	
+	
+	
 
 	private void drawWorld(){
 		worldImage = new BufferedImage(World.cellSize * World.worldLength,
@@ -255,6 +273,8 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 		}catch(Exception e){System.out.println("World file read error.");}
 	}
+	
+	
 
 	private void drawEnemies(Graphics g){								//Encapsulated method for drawing the enemise
 		for(int i = 0; i < enemyList.size(); i++){

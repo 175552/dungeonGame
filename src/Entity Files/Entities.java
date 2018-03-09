@@ -113,28 +113,28 @@ abstract class Entities {
 	}
 ///////////////////////////////////////////////////////////////////////////////Combat methods
 	void attackUp(){
-		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(0);
 		attacksDown = false;
 		attacksLeft = false;
 		attacksRight = false;
 	}
 	void attackDown(){
-		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(1);
 		attacksUp = false;
 		attacksLeft = false;
 		attacksRight = false;
 	}
 	void attackLeft(){
-		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(2);
 		attacksDown = false;
 		attacksUp = false;
 		attacksRight = false;
 	}
 	void attackRight(){
-		activeWeapon.getHitboxes().moveHitbox(xPos - xOffset, yPos - yOffset);
+		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(3);
 		attacksDown = false;
 		attacksLeft = false;
