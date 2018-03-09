@@ -1,8 +1,11 @@
 import javax.imageio.ImageIO;
 import java.awt.image.*;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.Timer;
 import java.io.*;
 
-public class Player extends Entities {
+public class Player extends Entities{
 
 	boolean movesUp, movesDown, movesLeft, movesRight;
 
@@ -19,5 +22,4 @@ public class Player extends Entities {
 			sprite = ImageIO.read(new File("../resources/textures/blueSquare.png"));
 		}catch(IOException e){System.out.println("Player image not found.");}
 	}
-
 }

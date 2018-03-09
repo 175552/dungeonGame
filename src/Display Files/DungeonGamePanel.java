@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class DungeonGamePanel extends GamePanels implements ActionListener{
 
-	Timer updater = new Timer(15, this);
+	Timer updater = new Timer(World.framerate, this);
 
 	BufferedImage worldImage, playerImage;
 
