@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.Timer;
 import java.io.*;
 
-public class Player extends Entities{
+public class Player extends Entity{
 
 	boolean movesUp, movesDown, movesLeft, movesRight;
 

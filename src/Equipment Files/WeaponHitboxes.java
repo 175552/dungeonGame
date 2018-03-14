@@ -6,5 +6,5 @@ abstract class WeaponHitboxes{
 	Area get(int index){
 		return hitboxes[index];
 	}
-	abstract void moveHitbox(Entities e, int x, int y);
+	abstract void moveHitbox(Entity e, int x, int y);
 }

@@ -2,7 +2,7 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 
-public class Enemies extends Entities{
+public class Enemies extends Entity{
 
 	boolean moveUp, moveDown, moveLeft, moveRight, aggroed = true;
 

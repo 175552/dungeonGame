@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 
-abstract class Entities {
+abstract class Entity {
 	int xPos, yPos, movespeed, xOffset, yOffset;			//Position and movement information
 
 	int HP, baseATK, baseATKSPD, baseDEF;
@@ -13,6 +13,8 @@ abstract class Entities {
 	BufferedImage sprite;
 
 	Area attackHitbox;
+	
+	EntityHitbox hb = new EntityHitbox(this);
 
 	Weapons activeWeapon;
 //////////////////////////////////////////////////////////Getter Methods

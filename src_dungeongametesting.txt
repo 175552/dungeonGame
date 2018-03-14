@@ -3,7 +3,7 @@
 "C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\World Files\\Room.java"
 "C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\World Files\\World.java"
 "C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\Entity Files\\Enemies.java"
-"C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\Entity Files\\Entities.java"
+"C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\Entity Files\\Entity.java"
 "C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\Entity Files\\EntityHitbox.java"
 "C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\Entity Files\\Player.java"
 "C:\\Users\\Thomas\\Desktop\\Java Programs\\repository\\src\\Display Files\\DungeonGamePanel.java"
