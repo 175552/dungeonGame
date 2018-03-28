@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class DungeonGamePanel extends GamePanels implements ActionListener{
 
-	Timer updater = new Timer(World.framerate, this);
+	Timer updater = new Timer(1000/World.framerate, this);
 
 	BufferedImage worldImage, playerImage;
 
@@ -121,7 +121,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 				p1.attacksRight = false;
 			}
 		};
-		
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Keybinds for movement
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "Up Start");
 		getActionMap().put("Up Start", upStart);
@@ -173,11 +173,11 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0, true), "Right AEnd");
 		getActionMap().put("Right AEnd", rightAE);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////Action Listener for updating stuff.
 	public void actionPerformed(ActionEvent e){
 ////////////////////////////////////////////////////////////////////////////////////////////////For normal movement
@@ -213,24 +213,23 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			enemyList.get(i).checkCurrentPos(p1);
 			enemyList.get(i).chasePlayer(p1);
 		}
-/////////////////////////////////////////////////////////////////////////////////////////For handling attacks
 		repaint();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////Draw player and world image
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
 		g.drawImage(p1.getSprite(), p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
-		//drawEnemies(g);
+		drawEnemies(g);
 		Graphics2D g2 = (Graphics2D)g.create();
 		g2.setColor(Color.white);
 		if(p1.attacksUp){
@@ -247,11 +246,17 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		}
 		if(p1.attacksUp || p1.attacksLeft || p1.attacksRight || p1.attacksDown){
 			g2.fill(p1.getAttackHitbox());
+			for(int i = 0; i < enemyList.size(); i++){
+				int[] bounds = enemyList.get(i).getBounds();
+				if(p1.getAttackHitbox().intersects(bounds[0], bounds[1], bounds[2], bounds[3])){
+					enemyList.get(i).aggroOff();
+				}
+			}
 		}
 	}
-	
-	
-	
+
+
+
 
 	private void drawWorld(){
 		worldImage = new BufferedImage(World.cellSize * World.worldLength,
@@ -273,8 +278,8 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 		}catch(Exception e){System.out.println("World file read error.");}
 	}
-	
-	
+
+
 
 	private void drawEnemies(Graphics g){								//Encapsulated method for drawing the enemise
 		for(int i = 0; i < enemyList.size(); i++){

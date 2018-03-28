@@ -77,4 +77,8 @@ public class Enemies extends Entity{
 		moveLeft = leftI;
 		moveRight = rightI;
 	}
+
+	void aggroOff(){
+		aggroed = false;
+	}
 }

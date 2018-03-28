@@ -13,8 +13,6 @@ abstract class Entity {
 	BufferedImage sprite;
 
 	Area attackHitbox;
-	
-	EntityHitbox hb = new EntityHitbox(this);
 
 	Weapons activeWeapon;
 //////////////////////////////////////////////////////////Getter Methods
@@ -29,6 +27,9 @@ abstract class Entity {
 	}
 	int getYOffset(){
 		return yOffset;
+	}
+	int[] getBounds(){
+		return new int[]{xPos, yPos, xOffset, yOffset};
 	}
 	BufferedImage getSprite(){
 		return sprite;

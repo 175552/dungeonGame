@@ -62,11 +62,7 @@
 				<folder>src\Entity Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Entity Files\Entities.java</path>
-				<folder>src\Entity Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\Entity Files\EntityHitbox.java</path>
+				<path>src\Entity Files\Entity.java</path>
 				<folder>src\Entity Files</folder>
 			</fileitem>
 			<fileitem>
