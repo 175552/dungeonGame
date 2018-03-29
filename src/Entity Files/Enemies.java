@@ -6,11 +6,15 @@ public class Enemies extends Entity{
 
 	boolean moveUp, moveDown, moveLeft, moveRight, aggroed = true;
 
-	Enemies(){
+	int aggroRange = 250;
+
+	Enemies(int x, int y){
 		try{
 			sprite = ImageIO.read(new File("../resources/textures/yellowSquare.png"));
 		}catch(IOException e){System.out.println("Enemy sprite not found.");}
-		movespeed = 2;
+		movespeed = 3;
+		xPos = x;
+		yPos = y;
 		xOffset = 25;
 		yOffset = 25;
 	}
@@ -76,6 +80,11 @@ public class Enemies extends Entity{
 		moveDown = downI;
 		moveLeft = leftI;
 		moveRight = rightI;
+		////////////////////////////////Aggro code
+		if(aggroRange > getEntityDis(p)){
+			aggroed = true;
+		}
+		else aggroed = false;
 	}
 
 	void aggroOff(){

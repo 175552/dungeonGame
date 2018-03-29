@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class DaggerHitboxes extends WeaponHitboxes {
 
-	double offset = 7, par = 120, perp = 70;		//offset = offset of circles to create arc.
+	double offset = 7, par = 140, perp = 70;		//offset = offset of circles to create arc.
 													//par = diameter of ellipse along the parallel to the direction the player is aiming
 													//perp = diameter of ellipse along the perpendicular to the direction the player is aiming
 

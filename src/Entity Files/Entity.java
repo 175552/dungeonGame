@@ -12,7 +12,7 @@ abstract class Entity {
 
 	BufferedImage sprite;
 
-	Area attackHitbox;
+	Area attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 
 	Weapons activeWeapon;
 //////////////////////////////////////////////////////////Getter Methods
@@ -142,5 +142,10 @@ abstract class Entity {
 		attacksDown = false;
 		attacksLeft = false;
 		attacksUp = false;
+	}
+//////////////////////////////////////////////////////////////////////////Check distance between this entity and specified entity
+	int getEntityDis(Entity e){
+		int x = Math.abs(e.getX() - getX()), y = Math.abs(e.getY() - getY());
+		return (int)Math.sqrt((x*x) + (y*y));
 	}
 }

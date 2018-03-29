@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.event.*;
 import java.awt.image.*;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import javax.imageio.ImageIO;
 import java.io.*;
 import java.util.Scanner;
@@ -37,7 +39,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 		updater.start();
 
-		enemyList.add(new Enemies());
+		enemyList.add(new Enemies(800, 400));
 
 ////////////////////////////////////////////////////////////////////////////////////////////Create actions for movement
 		upStart = new AbstractAction(){
@@ -211,7 +213,27 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 /////////////////////////////////////////////////////////////////////////////////////////Makes each enemy chase player
 		for(int i = 0; i < enemyList.size(); i++){
 			enemyList.get(i).checkCurrentPos(p1);
+			int[] bounds = enemyList.get(i).getBounds();
+			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
+				enemyList.get(i).aggroOff();
+			}
 			enemyList.get(i).chasePlayer(p1);
+		}
+/////////////////////////////////////////////////////////////////////////////////////////Combat
+		if(p1.attacksUp){
+			p1.attackUp();
+		}
+		else if(p1.attacksDown){
+			p1.attackDown();
+		}
+		else if(p1.attacksLeft){
+			p1.attackLeft();
+		}
+		else if(p1.attacksRight){
+			p1.attackRight();
+		}
+		if(!p1.attacksUp && !p1.attacksDown && !p1.attacksLeft && !p1.attacksRight){
+			p1.attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 		}
 		repaint();
 	}
@@ -232,26 +254,8 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		drawEnemies(g);
 		Graphics2D g2 = (Graphics2D)g.create();
 		g2.setColor(Color.white);
-		if(p1.attacksUp){
-			p1.attackUp();
-		}
-		else if(p1.attacksDown){
-			p1.attackDown();
-		}
-		else if(p1.attacksLeft){
-			p1.attackLeft();
-		}
-		else if(p1.attacksRight){
-			p1.attackRight();
-		}
 		if(p1.attacksUp || p1.attacksLeft || p1.attacksRight || p1.attacksDown){
 			g2.fill(p1.getAttackHitbox());
-			for(int i = 0; i < enemyList.size(); i++){
-				int[] bounds = enemyList.get(i).getBounds();
-				if(p1.getAttackHitbox().intersects(bounds[0], bounds[1], bounds[2], bounds[3])){
-					enemyList.get(i).aggroOff();
-				}
-			}
 		}
 	}
 
