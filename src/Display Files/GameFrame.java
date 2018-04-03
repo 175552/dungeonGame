@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class GameFrame extends JFrame implements ActionListener{
 
-	static int x = 1600, y = 900;
+	static int x = 1600, y = 1000;
 	GamePanels panel;
 	JButton gameButton, mapButton;
 

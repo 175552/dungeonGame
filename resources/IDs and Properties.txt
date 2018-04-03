@@ -1,7 +1,7 @@
 //Format is: ID: Movable Through; Spawnable On
 0:False;False
 1:True;False
-2:True;False
+2:True;True
 3:True;False
 4:True;False
 5:True;False

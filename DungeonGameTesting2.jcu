@@ -30,24 +30,6 @@
 			<path>src\Display Files\DungeonGamePanel.java</path>
 			<source>true</source>
 			<index>0</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Entity Files\Entity.java</path>
-			<source>true</source>
-			<index>1</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Entity Files\Enemies.java</path>
-			<source>true</source>
-			<index>2</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Equipment Files\DaggerHitboxes.java</path>
-			<source>true</source>
-			<index>3</index>
 			<active>true</active>
 		</docitem>
 	</open_files>

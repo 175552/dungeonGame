@@ -36,10 +36,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		createPanel();
 		idToHashMap();
 		drawWorld();
+		generateEnemies();
 
 		updater.start();
-
-		enemyList.add(new Enemies(800, 400));
 
 ////////////////////////////////////////////////////////////////////////////////////////////Create actions for movement
 		upStart = new AbstractAction(){
@@ -216,8 +215,12 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			int[] bounds = enemyList.get(i).getBounds();
 			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
 				enemyList.get(i).aggroOff();
+				enemyList.get(i).loseHP(10);
 			}
 			enemyList.get(i).chasePlayer(p1);
+			if(enemyList.get(i).getHP() <= 0){
+				enemyList.remove(i);
+			}
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Combat
 		if(p1.attacksUp){
@@ -237,13 +240,18 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		}
 		repaint();
 	}
+//////////////////////////////////////////////////////////////////////////////////////////Enemy Generation
 
 
-
-
-
-
-
+	void generateEnemies(){
+		for(int a = 0; a < World.worldHeight; a++){
+			for(int i = 0; i < World.worldLength; i++){
+				if(World.roomIDs[i][a].spawnCheck()){
+					enemyList.add(new Enemies(i*World.cellSize + (World.cellSize/2), a*World.cellSize + (World.cellSize/2)));
+				}
+			}
+		}
+	}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////Draw player and world image
@@ -257,6 +265,17 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		if(p1.attacksUp || p1.attacksLeft || p1.attacksRight || p1.attacksDown){
 			g2.fill(p1.getAttackHitbox());
 		}
+		for(int i = 0; i < enemyList.size(); i++){
+			int[] bounds = enemyList.get(i).getBounds();
+			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
+				Enemies e = enemyList.get(i);
+				g.setColor(Color.red);
+				g.fillRect(e.getX() - e.getXOffset(), e.getY() + e.getYOffset() + 10, 2 * e.getXOffset(), 6);
+				g.setColor(Color.green);
+				double percent = (double)(e.getHP())/(double)(e.getHPMax());
+				g.fillRect(e.getX() - e.getXOffset(), e.getY() + e.getYOffset() + 10, (int)((2 * e.getXOffset()) * percent), 6);
+			}
+		}
 	}
 
 
@@ -269,13 +288,13 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		Graphics2D g2 = worldImage.createGraphics();
 		int store = World.cellSize;
 		try{
-			Scanner input = new Scanner(new File("../maps/testMap.txt"));
+			Scanner input = new Scanner(new File("../maps/map.txt"));
 			for(int a = 0; a < World.worldHeight; a++){					//Draw images from the map buttons into a larger image.
 				for(int i = 0; i < World.worldLength; i++){
 					try{
 						int temp = input.nextInt();
 						g2.drawImage(idToTexture.get(temp), i*store, a*store, null);
-						World.worldIDs[i][a] = new Cell(temp);
+						World.roomIDs[i][a] = new Cell(temp);
 					}catch(Exception e){System.out.println("World draw error: " + e);}
 				}
 			}

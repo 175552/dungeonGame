@@ -24,7 +24,7 @@ public class CreatorPanel extends GamePanels implements ActionListener, MouseLis
 
 	BufferedImage sprite;
 
-	ImageIcon activeTexture;
+	ImageIcon activeTexture, spawnIcon, moveIcon;
 
 	Scanner textureReader;
 

@@ -6,7 +6,7 @@ import java.awt.image.*;
 abstract class Entity {
 	int xPos, yPos, movespeed, xOffset, yOffset;			//Position and movement information
 
-	int HP, baseATK, baseATKSPD, baseDEF;
+	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;
 
 	boolean attacksUp, attacksDown, attacksLeft, attacksRight;
 
@@ -30,6 +30,12 @@ abstract class Entity {
 	}
 	int[] getBounds(){
 		return new int[]{xPos, yPos, xOffset, yOffset};
+	}
+	int getHP(){
+		return HP;
+	}
+	int getHPMax(){
+		return HPMax;
 	}
 	BufferedImage getSprite(){
 		return sprite;
@@ -71,8 +77,8 @@ abstract class Entity {
 			if(getY() - getYOffset() - movespeed < 0)
 				return false;
 
-			if(World.worldIDs[(xPos - xOffset + 1)/World.cellSize][(yPos - yOffset - movespeed)/World.cellSize].moveCheck() &&
-				World.worldIDs[(xPos + xOffset - 1)/World.cellSize][(yPos - yOffset - movespeed)/World.cellSize].moveCheck())
+			if(World.roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos - yOffset - movespeed)/World.cellSize].moveCheck() &&
+				World.roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos - yOffset - movespeed)/World.cellSize].moveCheck())
 					return true;
 
 			else return false;
@@ -83,8 +89,8 @@ abstract class Entity {
 			if(yPos + yOffset + movespeed > World.cellSize * World.worldHeight)
 				return false;
 
-			if(World.worldIDs[(xPos - xOffset + 1)/World.cellSize][(yPos + yOffset + movespeed)/World.cellSize].moveCheck() &&
-				World.worldIDs[(xPos + xOffset - 1)/World.cellSize][(yPos + yOffset + movespeed )/World.cellSize].moveCheck())
+			if(World.roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos + yOffset + movespeed)/World.cellSize].moveCheck() &&
+				World.roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos + yOffset + movespeed )/World.cellSize].moveCheck())
 					return true;
 
 			else return false;
@@ -95,8 +101,8 @@ abstract class Entity {
 			if(xPos - xOffset - movespeed < 0)
 				return false;
 
-			if(World.worldIDs[(xPos - xOffset - movespeed)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
-				World.worldIDs[(xPos - xOffset - movespeed)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
+			if(World.roomIDs[(xPos - xOffset - movespeed)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
+				World.roomIDs[(xPos - xOffset - movespeed)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
 				return true;
 
 			else return false;
@@ -107,8 +113,8 @@ abstract class Entity {
 			if(xPos + xOffset + movespeed > World.cellSize * World.worldLength)
 				return false;
 
-			if(World.worldIDs[(xPos + xOffset + movespeed)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
-				World.worldIDs[(xPos + xOffset + movespeed)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
+			if(World.roomIDs[(xPos + xOffset + movespeed)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
+				World.roomIDs[(xPos + xOffset + movespeed)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
 				return true;
 
 			else return false;
@@ -142,6 +148,10 @@ abstract class Entity {
 		attacksDown = false;
 		attacksLeft = false;
 		attacksUp = false;
+	}
+
+	void loseHP(int lostHP){
+		HP -= lostHP;
 	}
 //////////////////////////////////////////////////////////////////////////Check distance between this entity and specified entity
 	int getEntityDis(Entity e){
