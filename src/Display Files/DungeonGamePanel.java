@@ -210,15 +210,17 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 				p1.moveRightDis(World.cellSize - ((p1.getX() + p1.getXOffset()) % World.cellSize));
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Makes each enemy chase player
-		for(int i = 0; i < enemyList.size(); i++){
+		for(int i = 0; i < enemyList.size(); i++){ //Iterates through every enemy on screen
 			enemyList.get(i).checkCurrentPos(p1);
-			int[] bounds = enemyList.get(i).getBounds();
+			int[] bounds = enemyList.get(i).getBounds();	//Gets hitbox of enemy
 			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
-				enemyList.get(i).aggroOff();
-				enemyList.get(i).loseHP(10);
+				enemyList.get(i).slowSpeed();	//Slow enemy when it's hit
+				enemyList.get(i).loseHP(p1.getWeapon().getDamage());	//Do damage to hit enemy
+				enemyList.get(i).hit();
 			}
-			enemyList.get(i).chasePlayer(p1);
-			if(enemyList.get(i).getHP() <= 0){
+			else enemyList.get(i).returnSpeed();	//If enemy isn't hit, return it to normal speed
+			enemyList.get(i).chasePlayer(p1);	//Have enemy chase the player
+			if(enemyList.get(i).getHP() <= 0){	//If an enemy dies, remove it from the arraylist
 				enemyList.remove(i);
 			}
 		}
@@ -266,14 +268,8 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			g2.fill(p1.getAttackHitbox());
 		}
 		for(int i = 0; i < enemyList.size(); i++){
-			int[] bounds = enemyList.get(i).getBounds();
-			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
-				Enemies e = enemyList.get(i);
-				g.setColor(Color.red);
-				g.fillRect(e.getX() - e.getXOffset(), e.getY() + e.getYOffset() + 10, 2 * e.getXOffset(), 6);
-				g.setColor(Color.green);
-				double percent = (double)(e.getHP())/(double)(e.getHPMax());
-				g.fillRect(e.getX() - e.getXOffset(), e.getY() + e.getYOffset() + 10, (int)((2 * e.getXOffset()) * percent), 6);
+			if(enemyList.get(i).checkIfHit()){
+				enemyList.get(i).showHPBar(g);
 			}
 		}
 	}

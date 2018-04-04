@@ -6,7 +6,9 @@ public class DaggerHitboxes extends WeaponHitboxes {
 	double offset = 7, par = 140, perp = 70;		//offset = offset of circles to create arc.
 													//par = diameter of ellipse along the parallel to the direction the player is aiming
 													//perp = diameter of ellipse along the perpendicular to the direction the player is aiming
-
+	DaggerHitboxes(){
+		range = (int)(par + offset);
+	}
 
 	void moveHitbox(Entity e, int x, int y){			//Recreates Area at player location for each attack
 		for(int i = 0; i < 4; i++){

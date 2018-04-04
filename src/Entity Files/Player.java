@@ -22,4 +22,11 @@ public class Player extends Entity{
 			sprite = ImageIO.read(new File("../resources/textures/blueSquare.png"));
 		}catch(IOException e){System.out.println("Player image not found.");}
 	}
+
+	void die(Graphics g){
+		int fontSize = 100;
+		g.setColor(Color.white);
+		g.setFont(new Font("Serif", Font.BOLD, fontSize));
+		g.drawString("YOU DIED", (World.worldLength * World.cellSize)/2 - fontSize, (World.worldHeight * World.cellSize)/2 - fontSize);
+	}
 }

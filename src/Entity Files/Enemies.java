@@ -13,14 +13,16 @@ public class Enemies extends Entity{
 			sprite = ImageIO.read(new File("../resources/textures/yellowSquare.png"));
 		}catch(IOException e){System.out.println("Enemy sprite not found.");}
 		movespeed = 3;
+		defaultMovespeed = 3;
 		xPos = x;
 		yPos = y;
 		xOffset = 25;
 		yOffset = 25;
+		activeWeapon = new BasicDagger();
 	}
 
 	void chasePlayer(Player p){
-		if(aggroed){
+		if(aggroed && getEntityDis(p) > activeWeapon.getRange()/2){
 			if(moveUp && getY() - p.getY() >= movespeed)
 				moveUp();
 			else if(moveUp)

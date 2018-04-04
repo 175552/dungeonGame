@@ -4,11 +4,11 @@ import java.awt.geom.*;
 import java.awt.image.*;
 
 abstract class Entity {
-	int xPos, yPos, movespeed, xOffset, yOffset;			//Position and movement information
+	int xPos, yPos, movespeed, defaultMovespeed, xOffset, yOffset;			//Position and movement information
 
 	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;
 
-	boolean attacksUp, attacksDown, attacksLeft, attacksRight;
+	boolean attacksUp, attacksDown, attacksLeft, attacksRight, hit;
 
 	BufferedImage sprite;
 
@@ -36,6 +36,9 @@ abstract class Entity {
 	}
 	int getHPMax(){
 		return HPMax;
+	}
+	boolean checkIfHit(){
+		return hit;
 	}
 	BufferedImage getSprite(){
 		return sprite;
@@ -70,6 +73,14 @@ abstract class Entity {
 	}
 	void moveRightDis(int dis){
 		xPos += dis;
+	}
+	void slowSpeed(){
+		if(movespeed == defaultMovespeed)
+			movespeed /= 2;
+	}
+	void returnSpeed(){
+		if(movespeed != defaultMovespeed)
+			movespeed = defaultMovespeed;
 	}
 //////////////////////////////////////////////////////////////////////////////Direction checking methods
 	boolean checkUp(){
@@ -152,6 +163,18 @@ abstract class Entity {
 
 	void loseHP(int lostHP){
 		HP -= lostHP;
+	}
+
+	void hit(){
+		hit = true;
+	}
+
+	void showHPBar(Graphics g){
+		g.setColor(Color.red);
+		g.fillRect(getX() - getXOffset(), getY() + getYOffset() + 10, 2 * getXOffset(), 6);
+		g.setColor(Color.green);
+		double percent = (double)(getHP())/(double)(getHPMax());
+		g.fillRect(getX() - getXOffset(), getY() + getYOffset() + 10, (int)((2 * getXOffset()) * percent), 6);
 	}
 //////////////////////////////////////////////////////////////////////////Check distance between this entity and specified entity
 	int getEntityDis(Entity e){
