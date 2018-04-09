@@ -41,6 +41,16 @@
 			<folderitem>
 				<path>src\Equipment Files</path>
 			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Daggers</path>
+			</folderitem>
+			<fileitem>
+				<path>src\StartingRoom.java</path>
+				<folder>src</folder>
+			</fileitem>
 			<fileitem>
 				<path>src\World Files\Cell.java</path>
 				<folder>src\World Files</folder>
@@ -86,28 +96,32 @@
 				<folder>src\Display Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\BasicDagger.java</path>
-				<folder>src\Equipment Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\Equipment Files\DaggerHitboxes.java</path>
-				<folder>src\Equipment Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\Equipment Files\Daggers.java</path>
-				<folder>src\Equipment Files</folder>
-			</fileitem>
-			<fileitem>
 				<path>src\Equipment Files\Equipment.java</path>
 				<folder>src\Equipment Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\WeaponHitboxes.java</path>
-				<folder>src\Equipment Files</folder>
+				<path>src\Equipment Files\Weapons\WeaponHitboxes.java</path>
+				<folder>src\Equipment Files\Weapons</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons.java</path>
-				<folder>src\Equipment Files</folder>
+				<path>src\Equipment Files\Weapons\Weapons.java</path>
+				<folder>src\Equipment Files\Weapons</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Daggers\BasicDagger.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Daggers\BrokenDagger.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Daggers\DaggerHitboxes.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Daggers\Daggers.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers</folder>
 			</fileitem>
 		</include>
 	</files>

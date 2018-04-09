@@ -4,7 +4,7 @@ import java.awt.geom.*;
 import java.awt.image.*;
 
 abstract class Entity {
-	int xPos, yPos, movespeed, defaultMovespeed, xOffset, yOffset;			//Position and movement information
+	int xPos, yPos, movespeed, defaultMovespeed, acceleration, xVelocity, yVelocity, xOffset, yOffset;			//Position and movement information
 
 	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;
 
@@ -51,6 +51,17 @@ abstract class Entity {
 	}
 //////////////////////////////////////////////////////////////////////////Movement methods
 	void moveUp(){
+		/*
+		if(yVelocity != defaultMovespeed){
+			System.out.println("test");
+			if(Math.abs(yVelocity - acceleration) <= defaultMovespeed){
+				yVelocity -= acceleration;
+			}
+			else{
+				yVelocity -= acceleration - defaultMovespeed;
+			}
+		}
+		*/
 		yPos -= movespeed;
 	}
 	void moveUpDis(int dis){
@@ -81,6 +92,19 @@ abstract class Entity {
 	void returnSpeed(){
 		if(movespeed != defaultMovespeed)
 			movespeed = defaultMovespeed;
+	}
+//////////////////////////////////////////////////////////////////////////////Velocity movement methods
+	void move(){
+		xPos += xVelocity;
+		yPos += yVelocity;
+	}
+	void inertia(){
+		if(xVelocity != 0){
+			xVelocity -= acceleration;
+		}
+		if(yVelocity != 0){
+			yVelocity -= acceleration;
+		}
 	}
 //////////////////////////////////////////////////////////////////////////////Direction checking methods
 	boolean checkUp(){
@@ -176,9 +200,26 @@ abstract class Entity {
 		double percent = (double)(getHP())/(double)(getHPMax());
 		g.fillRect(getX() - getXOffset(), getY() + getYOffset() + 10, (int)((2 * getXOffset()) * percent), 6);
 	}
+
+	void drawAttack(Graphics g){
+		g.setColor(Color.white);
+		Graphics2D g2 = (Graphics2D)g.create();
+		g2.fill(attackHitbox);
+	}
+	boolean isEntityInRange(Entity e){
+		return getEntityDis(e) < activeWeapon.getRange();
+	}
 //////////////////////////////////////////////////////////////////////////Check distance between this entity and specified entity
 	int getEntityDis(Entity e){
 		int x = Math.abs(e.getX() - getX()), y = Math.abs(e.getY() - getY());
 		return (int)Math.sqrt((x*x) + (y*y));
+	}
+
+	int getVerticalDis(Entity e){
+		return Math.abs(e.getY() - getY());
+	}
+
+	int getHorizontalDis(Entity e){
+		return Math.abs(e.getX() - getX());
 	}
 }

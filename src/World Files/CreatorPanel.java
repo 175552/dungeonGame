@@ -24,7 +24,9 @@ public class CreatorPanel extends GamePanels implements ActionListener, MouseLis
 
 	BufferedImage sprite;
 
-	ImageIcon activeTexture, spawnIcon, moveIcon;
+	ImageIcon activeTexture;
+
+	BufferedImage spawnIcon, moveIcon;
 
 	Scanner textureReader;
 
@@ -36,7 +38,10 @@ public class CreatorPanel extends GamePanels implements ActionListener, MouseLis
 		textureReader.nextLine();
 		}catch(IOException e){System.out.println("File read error.");}
 
-
+		try{
+			spawnIcon = ImageIO.read(new File("../resources/icons/spawnIcon.png"));
+			moveIcon = ImageIO.read(new File("../resources/icons/moveIcon.png"));
+		}catch(IOException e){}
 		createPanel();
 
 		setBackground(Color.gray);

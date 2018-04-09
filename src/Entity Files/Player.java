@@ -15,6 +15,8 @@ public class Player extends Entity{
 		movespeed = 5;
 		xOffset = 25;
 		yOffset = 25;
+		//defaultMovespeed = 6;
+		//acceleration = 4;
 
 		activeWeapon = new BasicDagger();
 
@@ -25,7 +27,7 @@ public class Player extends Entity{
 
 	void die(Graphics g){
 		int fontSize = 100;
-		g.setColor(Color.white);
+		g.setColor(Color.black);
 		g.setFont(new Font("Serif", Font.BOLD, fontSize));
 		g.drawString("YOU DIED", (World.worldLength * World.cellSize)/2 - fontSize, (World.worldHeight * World.cellSize)/2 - fontSize);
 	}

@@ -35,6 +35,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	DungeonGamePanel(){
 		createPanel();
 		idToHashMap();
+		World.setup();
 		drawWorld();
 		generateEnemies();
 
@@ -182,6 +183,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 ////////////////////////////////////////////////////////////////////////////////////////////////Action Listener for updating stuff.
 	public void actionPerformed(ActionEvent e){
 ////////////////////////////////////////////////////////////////////////////////////////////////For normal movement
+
 		if(p1.movesUp && p1.checkUp()){
 			p1.moveUp();
 		}
@@ -209,17 +211,30 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			if((p1.getX() + p1.getXOffset()) % World.cellSize != 0)
 				p1.moveRightDis(World.cellSize - ((p1.getX() + p1.getXOffset()) % World.cellSize));
 		}
-/////////////////////////////////////////////////////////////////////////////////////////Makes each enemy chase player
+/////////////////////////////////////////////////////////////////////////////////////////Enemy commands
 		for(int i = 0; i < enemyList.size(); i++){ //Iterates through every enemy on screen
 			enemyList.get(i).checkCurrentPos(p1);
 			int[] bounds = enemyList.get(i).getBounds();	//Gets hitbox of enemy
+			int[] pBounds = p1.getBounds();					//Player hitbox
+
 			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
 				enemyList.get(i).slowSpeed();	//Slow enemy when it's hit
 				enemyList.get(i).loseHP(p1.getWeapon().getDamage());	//Do damage to hit enemy
 				enemyList.get(i).hit();
 			}
+
 			else enemyList.get(i).returnSpeed();	//If enemy isn't hit, return it to normal speed
+
 			enemyList.get(i).chasePlayer(p1);	//Have enemy chase the player
+
+			if(enemyList.get(i).isEntityInRange(p1)){
+				enemyList.get(i).attackPlayer(p1);
+				if(enemyList.get(i).getAttackHitbox().intersects(pBounds[0] - pBounds[2],
+					pBounds[1] - pBounds[3], pBounds[2] * 2, pBounds[3] * 2)){
+					p1.loseHP(enemyList.get(i).getWeapon().getDamage());
+					p1.hit();
+				}
+			}
 			if(enemyList.get(i).getHP() <= 0){	//If an enemy dies, remove it from the arraylist
 				enemyList.remove(i);
 			}
@@ -241,6 +256,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			p1.attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 		}
 		repaint();
+		if(p1.getHP() < 0){
+			updater.stop();
+		}
 	}
 //////////////////////////////////////////////////////////////////////////////////////////Enemy Generation
 
@@ -259,18 +277,30 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 //////////////////////////////////////////////////////////////////////////////////////////////////Draw player and world image
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
-		g.drawImage(p1.getSprite(), p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
-		drawEnemies(g);
-		Graphics2D g2 = (Graphics2D)g.create();
-		g2.setColor(Color.white);
-		if(p1.attacksUp || p1.attacksLeft || p1.attacksRight || p1.attacksDown){
-			g2.fill(p1.getAttackHitbox());
-		}
-		for(int i = 0; i < enemyList.size(); i++){
-			if(enemyList.get(i).checkIfHit()){
-				enemyList.get(i).showHPBar(g);
+		if(!(p1.getHP() < 0)){
+			g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
+			g.drawImage(p1.getSprite(), p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
+			drawEnemies(g);
+			Graphics2D g2 = (Graphics2D)g.create();
+			g2.setColor(Color.white);
+			if(p1.attacksUp || p1.attacksLeft || p1.attacksRight || p1.attacksDown){
+				p1.drawAttack(g);
 			}
+			if(p1.checkIfHit()){
+				p1.showHPBar(g);
+			}
+			for(int i = 0; i < enemyList.size(); i++){
+				Entity e = enemyList.get(i);
+				if(enemyList.get(i).checkIfHit()){
+					e.showHPBar(g);
+				}
+				if(enemyList.get(i).isEntityInRange(p1)){
+					e.drawAttack(g);
+				}
+			}
+		}
+		else{
+			p1.die(g);
 		}
 	}
 
@@ -283,8 +313,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 		Graphics2D g2 = worldImage.createGraphics();
 		int store = World.cellSize;
+		System.out.println(World.xRoomCount/2 + ", " + World.currentY);
 		try{
-			Scanner input = new Scanner(new File("../maps/map.txt"));
+			Scanner input = new Scanner(new File(World.rooms[World.currentX][World.currentY].getFilePath()));
 			for(int a = 0; a < World.worldHeight; a++){					//Draw images from the map buttons into a larger image.
 				for(int i = 0; i < World.worldLength; i++){
 					try{

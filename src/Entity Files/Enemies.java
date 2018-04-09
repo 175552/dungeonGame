@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 
 public class Enemies extends Entity{
 
-	boolean moveUp, moveDown, moveLeft, moveRight, aggroed = true;
+	boolean playerUp, playerDown, playerLeft, playerRight, aggroed = true;
 
 	int aggroRange = 250;
 
@@ -12,76 +12,64 @@ public class Enemies extends Entity{
 		try{
 			sprite = ImageIO.read(new File("../resources/textures/yellowSquare.png"));
 		}catch(IOException e){System.out.println("Enemy sprite not found.");}
-		movespeed = 3;
+		movespeed = 5;
 		defaultMovespeed = 3;
 		xPos = x;
 		yPos = y;
 		xOffset = 25;
 		yOffset = 25;
-		activeWeapon = new BasicDagger();
+		activeWeapon = new BrokenDagger();
 	}
 
 	void chasePlayer(Player p){
 		if(aggroed && getEntityDis(p) > activeWeapon.getRange()/2){
-			if(moveUp && getY() - p.getY() >= movespeed)
+			if(playerUp && getY() - p.getY() >= movespeed)
 				moveUp();
-			else if(moveUp)
+			else if(playerUp)
 				moveUpDis(getY() - p.getY());
 
-			if(moveDown && p.getY() - getY() >= movespeed)
+			if(playerDown && p.getY() - getY() >= movespeed)
 				moveDown();
-			else if(moveDown)
+			else if(playerDown)
 				moveDownDis(p.getY() - getY());
 
-			if(moveLeft && getX() - p.getX() >= movespeed)
+			if(playerLeft && getX() - p.getX() >= movespeed)
 				moveLeft();
-			else if(moveLeft)
+			else if(playerLeft)
 				moveLeftDis(getX() - p.getX());
 
-			if(moveRight && p.getX() - getX() >= movespeed)
+			if(playerRight && p.getX() - getX() >= movespeed)
 				moveRight();
-			else if(moveRight)
+			else if(playerRight)
 				moveRightDis(p.getX() - getX());
 		}
 	}
 
 	void checkCurrentPos(Player p){
-		boolean upI = moveUp, downI = moveDown, leftI = moveLeft, rightI = moveRight;
 		if(p.getY() < getY()){
-			upI = true;
-			downI = false;
+			playerUp = true;
+			playerDown = false;
 		}
 		else if(p.getY() > getY()){
-			downI = true;
-			upI = false;
+			playerDown = true;
+			playerUp = false;
 		}
 		else{
-			upI = false;
-			downI = false;
+			playerUp = false;
+			playerDown = false;
 		}
 		if(p.getX() < getX()){
-			leftI = true;
-			rightI = false;
+			playerLeft = true;
+			playerRight = false;
 		}
 		else if(p.getX() > getX()){
-			rightI = true;
-			leftI = false;
+			playerRight = true;
+			playerLeft = false;
 		}
 		else{
-			leftI = false;
-			rightI = false;
+			playerLeft = false;
+			playerRight = false;
 		}
-		boolean hesitate =  moveUp =! upI ? true :
-					moveDown != downI ? true :
-					moveLeft != leftI ? true :
-					moveRight != rightI ? true :
-					false;
-
-
-		moveUp = upI;
-		moveDown = downI;
-		moveLeft = leftI;
-		moveRight = rightI;
 		////////////////////////////////Aggro code
 		if(aggroRange > getEntityDis(p)){
 			aggroed = true;
@@ -91,5 +79,16 @@ public class Enemies extends Entity{
 
 	void aggroOff(){
 		aggroed = false;
+	}
+
+	void attackPlayer(Player p){
+		if(getVerticalDis(p) >= getHorizontalDis(p) && playerUp)
+			attackUp();
+		else if(getVerticalDis(p) >= getHorizontalDis(p) && playerDown)
+			attackDown();
+		else if(getHorizontalDis(p) >= getVerticalDis(p) && playerLeft)
+			attackLeft();
+		else if(getHorizontalDis(p) >= getVerticalDis(p) && playerRight)
+			attackRight();
 	}
 }
