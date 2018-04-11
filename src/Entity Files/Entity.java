@@ -8,7 +8,7 @@ abstract class Entity {
 
 	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;
 
-	boolean attacksUp, attacksDown, attacksLeft, attacksRight, hit;
+	boolean attacksUp, attacksDown, attacksLeft, attacksRight, hit, xMove, yMove;
 
 	BufferedImage sprite;
 
@@ -28,6 +28,12 @@ abstract class Entity {
 	int getYOffset(){
 		return yOffset;
 	}
+	int getXVelocity(){
+		return xVelocity;
+	}
+	int getYVelocity(){
+		return yVelocity;
+	}
 	int[] getBounds(){
 		return new int[]{xPos, yPos, xOffset, yOffset};
 	}
@@ -40,6 +46,12 @@ abstract class Entity {
 	boolean checkIfHit(){
 		return hit;
 	}
+	boolean getXMove(){
+		return xMove;
+	}
+	boolean getYMove(){
+		return yMove;
+	}
 	BufferedImage getSprite(){
 		return sprite;
 	}
@@ -51,36 +63,49 @@ abstract class Entity {
 	}
 //////////////////////////////////////////////////////////////////////////Movement methods
 	void moveUp(){
-		/*
-		if(yVelocity != defaultMovespeed){
-			System.out.println("test");
-			if(Math.abs(yVelocity - acceleration) <= defaultMovespeed){
+		if(yVelocity > -1 * defaultMovespeed){
+			if(Math.abs(yVelocity - acceleration) < defaultMovespeed)
 				yVelocity -= acceleration;
-			}
-			else{
-				yVelocity -= acceleration - defaultMovespeed;
-			}
+			else if(yVelocity != defaultMovespeed)
+				yVelocity -= defaultMovespeed - acceleration;
+			yMove = true;
 		}
-		*/
-		yPos -= movespeed;
 	}
 	void moveUpDis(int dis){
 		yPos -= dis;
 	}
 	void moveDown(){
-		yPos += movespeed;
+		if(yVelocity < defaultMovespeed){
+			if(Math.abs(yVelocity + acceleration) < defaultMovespeed)
+				yVelocity += acceleration;
+			else if(yVelocity != defaultMovespeed)
+				yVelocity += defaultMovespeed - acceleration;
+			yMove = true;
+		}
 	}
 	void moveDownDis(int dis){
 		yPos += dis;
 	}
 	void moveLeft(){
-		xPos -= movespeed;
+		if(xVelocity > -1 * defaultMovespeed){
+			if(Math.abs(xVelocity - acceleration) < defaultMovespeed)
+				xVelocity -= acceleration;
+			else if(xVelocity != defaultMovespeed)
+				xVelocity -= defaultMovespeed - acceleration;
+			xMove = true;
+		}
 	}
 	void moveLeftDis(int dis){
 		xPos -= dis;
 	}
 	void moveRight(){
-		xPos += movespeed;
+		if(xVelocity < defaultMovespeed){
+			if(Math.abs(xVelocity + acceleration) < defaultMovespeed)
+				xVelocity += acceleration;
+			else if(xVelocity != defaultMovespeed)
+				xVelocity += defaultMovespeed - acceleration;
+			xMove = true;
+		}
 	}
 	void moveRightDis(int dis){
 		xPos += dis;
@@ -98,22 +123,41 @@ abstract class Entity {
 		xPos += xVelocity;
 		yPos += yVelocity;
 	}
-	void inertia(){
-		if(xVelocity != 0){
-			xVelocity -= acceleration;
+	void inertiaX(){
+		if(!xMove && xVelocity != 0){
+			if(xVelocity < 0)
+				xVelocity += acceleration/4;
+			else
+				xVelocity -= acceleration/4;
 		}
-		if(yVelocity != 0){
-			yVelocity -= acceleration;
+	}
+	void inertiaY(){
+		if(!yMove && yVelocity != 0){
+			if(yVelocity < 0)
+				yVelocity += acceleration/4;
+			else
+				yVelocity -= acceleration/4;
 		}
+	}
+	void stopX(){
+		xVelocity = 0;
+	}
+	void stopY(){
+		yVelocity = 0;
+	}
+	void inertiaSetup(){
+		xMove = false;
+		yMove = false;
 	}
 //////////////////////////////////////////////////////////////////////////////Direction checking methods
 	boolean checkUp(){
 		try{
-			if(getY() - getYOffset() - movespeed < 0)
+			//System.out.println(yPos + ", " + yOffset + ", " + yVelocity);
+			if(yPos - yOffset + yVelocity < 0)
 				return false;
 
-			if(World.roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos - yOffset - movespeed)/World.cellSize].moveCheck() &&
-				World.roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos - yOffset - movespeed)/World.cellSize].moveCheck())
+			if(World.roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos - yOffset + yVelocity)/World.cellSize].moveCheck() &&
+				World.roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos - yOffset + yVelocity)/World.cellSize].moveCheck())
 					return true;
 
 			else return false;
@@ -121,7 +165,7 @@ abstract class Entity {
 	}
 	boolean checkDown(){
 		try{
-			if(yPos + yOffset + movespeed > World.cellSize * World.worldHeight)
+			if(yPos + yOffset + yVelocity > World.cellSize * World.worldHeight)
 				return false;
 
 			if(World.roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos + yOffset + movespeed)/World.cellSize].moveCheck() &&
@@ -133,11 +177,11 @@ abstract class Entity {
 	}
 	boolean checkLeft(){
 		try{
-			if(xPos - xOffset - movespeed < 0)
+			if(xPos - xOffset + xVelocity < 0)
 				return false;
 
-			if(World.roomIDs[(xPos - xOffset - movespeed)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
-				World.roomIDs[(xPos - xOffset - movespeed)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
+			if(World.roomIDs[(xPos - xOffset + xVelocity)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
+				World.roomIDs[(xPos - xOffset + xVelocity)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
 				return true;
 
 			else return false;
@@ -145,11 +189,11 @@ abstract class Entity {
 	}
 	boolean checkRight(){
 		try{
-			if(xPos + xOffset + movespeed > World.cellSize * World.worldLength)
+			if(xPos + xOffset  + xVelocity > World.cellSize * World.worldLength)
 				return false;
 
-			if(World.roomIDs[(xPos + xOffset + movespeed)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
-				World.roomIDs[(xPos + xOffset + movespeed)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
+			if(World.roomIDs[(xPos + xOffset  + xVelocity)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
+				World.roomIDs[(xPos + xOffset  + xVelocity)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
 				return true;
 
 			else return false;

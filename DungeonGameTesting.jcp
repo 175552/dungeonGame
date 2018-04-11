@@ -48,10 +48,6 @@
 				<path>src\Equipment Files\Weapons\Daggers</path>
 			</folderitem>
 			<fileitem>
-				<path>src\StartingRoom.java</path>
-				<folder>src</folder>
-			</fileitem>
-			<fileitem>
 				<path>src\World Files\Cell.java</path>
 				<folder>src\World Files</folder>
 			</fileitem>
@@ -61,6 +57,10 @@
 			</fileitem>
 			<fileitem>
 				<path>src\World Files\Room.java</path>
+				<folder>src\World Files</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\World Files\StartingRoom.java</path>
 				<folder>src\World Files</folder>
 			</fileitem>
 			<fileitem>

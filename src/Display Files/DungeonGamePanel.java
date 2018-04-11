@@ -184,18 +184,36 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 ////////////////////////////////////////////////////////////////////////////////////////////////For normal movement
 
-		if(p1.movesUp && p1.checkUp()){
+		p1.inertiaSetup(); ///////////Sets player's booleans for moving in the x and y to false.
+
+		if(p1.movesUp){			////////////Handles taking in input for movement
 			p1.moveUp();
 		}
-		else if(p1.movesDown && p1.checkDown()){
+		else if(p1.movesDown){
 			p1.moveDown();
 		}
-		if(p1.movesLeft && p1.checkLeft()){
+		if(p1.movesLeft){
 			p1.moveLeft();
 		}
-		else if(p1.movesRight && p1.checkRight()){
+		else if(p1.movesRight){
 			p1.moveRight();
 		}
+
+		///////Checks if player hits a wall
+
+		if((p1.getYVelocity() < 0 && !p1.checkUp()) || (p1.getYVelocity() > 0 && !p1.checkDown()))
+			p1.stopY();
+
+		if((p1.getXVelocity() < 0 && !p1.checkLeft()) || (p1.getXVelocity() > 0 && !p1.checkRight()))
+			p1.stopX();
+
+
+		p1.inertiaX();		//////////Checks if player is not actively moving in a direction, and if so, slows the player.
+		p1.inertiaY();
+
+		p1.move();			//Moves the player
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////For exact movement to line up with obstacles
 		if(p1.movesUp && !p1.checkUp()){
 			p1.moveUpDis((p1.getY() - p1.getYOffset()) % World.cellSize);
