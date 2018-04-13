@@ -33,6 +33,9 @@
 				<path>src\World Files</path>
 			</folderitem>
 			<folderitem>
+				<path>src\World Files\Rooms</path>
+			</folderitem>
+			<folderitem>
 				<path>src\Entity Files</path>
 			</folderitem>
 			<folderitem>
@@ -60,12 +63,12 @@
 				<folder>src\World Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\World Files\StartingRoom.java</path>
+				<path>src\World Files\World.java</path>
 				<folder>src\World Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\World Files\World.java</path>
-				<folder>src\World Files</folder>
+				<path>src\World Files\Rooms\StartingRoom.java</path>
+				<folder>src\World Files\Rooms</folder>
 			</fileitem>
 			<fileitem>
 				<path>src\Entity Files\Enemies.java</path>

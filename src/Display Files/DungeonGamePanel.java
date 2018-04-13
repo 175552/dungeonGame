@@ -38,6 +38,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		World.setup();
 		drawWorld();
 		generateEnemies();
+		p1.setupEffectTimers();
 
 		updater.start();
 
@@ -199,19 +200,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			p1.moveRight();
 		}
 
-		///////Checks if player hits a wall
-
-		if((p1.getYVelocity() < 0 && !p1.checkUp()) || (p1.getYVelocity() > 0 && !p1.checkDown()))
-			p1.stopY();
-
-		if((p1.getXVelocity() < 0 && !p1.checkLeft()) || (p1.getXVelocity() > 0 && !p1.checkRight()))
-			p1.stopX();
-
-
-		p1.inertiaX();		//////////Checks if player is not actively moving in a direction, and if so, slows the player.
-		p1.inertiaY();
-
-		p1.move();			//Moves the player
+		p1.move();			//Handles movement and stops player if it hits a wall
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////For exact movement to line up with obstacles
@@ -235,22 +224,21 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			int[] bounds = enemyList.get(i).getBounds();	//Gets hitbox of enemy
 			int[] pBounds = p1.getBounds();					//Player hitbox
 
+			/////////////Methods to be run when enemy is hit
 			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
-				enemyList.get(i).slowSpeed();	//Slow enemy when it's hit
 				enemyList.get(i).loseHP(p1.getWeapon().getDamage());	//Do damage to hit enemy
-				enemyList.get(i).hit();
+				enemyList.get(i).hit(p1);
 			}
-
-			else enemyList.get(i).returnSpeed();	//If enemy isn't hit, return it to normal speed
 
 			enemyList.get(i).chasePlayer(p1);	//Have enemy chase the player
 
 			if(enemyList.get(i).isEntityInRange(p1)){
 				enemyList.get(i).attackPlayer(p1);
+				////////////////////Methods to run when player is hit
 				if(enemyList.get(i).getAttackHitbox().intersects(pBounds[0] - pBounds[2],
 					pBounds[1] - pBounds[3], pBounds[2] * 2, pBounds[3] * 2)){
 					p1.loseHP(enemyList.get(i).getWeapon().getDamage());
-					p1.hit();
+					p1.hit(enemyList.get(i));
 				}
 			}
 			if(enemyList.get(i).getHP() <= 0){	//If an enemy dies, remove it from the arraylist
@@ -288,6 +276,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 					enemyList.add(new Enemies(i*World.cellSize + (World.cellSize/2), a*World.cellSize + (World.cellSize/2)));
 				}
 			}
+		}
+		for(int i = 0; i < enemyList.size(); i++){
+			enemyList.get(i).setupEffectTimers();
 		}
 	}
 

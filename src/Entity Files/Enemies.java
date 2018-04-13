@@ -6,14 +6,14 @@ public class Enemies extends Entity{
 
 	boolean playerUp, playerDown, playerLeft, playerRight, aggroed = true;
 
-	int aggroRange = 250;
+	int aggroRange = 250, holdAggroRange = 400;
 
 	Enemies(int x, int y){
 		try{
 			sprite = ImageIO.read(new File("../resources/textures/yellowSquare.png"));
 		}catch(IOException e){System.out.println("Enemy sprite not found.");}
-		movespeed = 5;
 		defaultMovespeed = 3;
+		acceleration = 2;
 		xPos = x;
 		yPos = y;
 		xOffset = 25;
@@ -22,27 +22,33 @@ public class Enemies extends Entity{
 	}
 
 	void chasePlayer(Player p){
+
+		inertiaSetup();
+
+
 		if(aggroed && getEntityDis(p) > activeWeapon.getRange()/2){
-			if(playerUp && getY() - p.getY() >= movespeed)
-				moveUp();
+			if(playerUp && Math.abs(p.getY() - yPos) < acceleration){
+				moveUpDis(p.getY() - yPos);
+				stopY();
+			}
 			else if(playerUp)
-				moveUpDis(getY() - p.getY());
-
-			if(playerDown && p.getY() - getY() >= movespeed)
-				moveDown();
+				moveUp();
+			if(playerDown && Math.abs(p.getY() - yPos) < acceleration){
+				moveDownDis(p.getY() - yPos);
+				stopY();
+			}
 			else if(playerDown)
-				moveDownDis(p.getY() - getY());
-
-			if(playerLeft && getX() - p.getX() >= movespeed)
+				moveDown();
+			if(playerLeft)
 				moveLeft();
-			else if(playerLeft)
-				moveLeftDis(getX() - p.getX());
-
-			if(playerRight && p.getX() - getX() >= movespeed)
-				moveRight();
 			else if(playerRight)
-				moveRightDis(p.getX() - getX());
+				moveRight();
 		}
+		else{
+			stopX();
+			stopY();
+		}
+		move();
 	}
 
 	void checkCurrentPos(Player p){
@@ -71,10 +77,10 @@ public class Enemies extends Entity{
 			playerRight = false;
 		}
 		////////////////////////////////Aggro code
-		if(aggroRange > getEntityDis(p)){
+		if(aggroRange > getEntityDis(p))			//If player is in enemy's aggro range, enemy is aggroed
 			aggroed = true;
-		}
-		else aggroed = false;
+		else if(aggroed && holdAggroRange < getEntityDis(p))//If enemy is aggroed and player moves out of a certain range, disable aggro
+			aggroed = false;
 	}
 
 	void aggroOff(){

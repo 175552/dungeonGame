@@ -15,6 +15,9 @@
 				<path>src\World Files</path>
 			</folderitem>
 			<folderitem>
+				<path>src\World Files\Rooms</path>
+			</folderitem>
+			<folderitem>
 				<path>src\Entity Files</path>
 			</folderitem>
 			<folderitem>
@@ -33,13 +36,13 @@
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\Entity Files\Entity.java</path>
+			<path>src\Display Files\DungeonGamePanel.java</path>
 			<source>true</source>
 			<index>0</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Display Files\DungeonGamePanel.java</path>
+			<path>src\Entity Files\Enemies.java</path>
 			<source>true</source>
 			<index>1</index>
 			<active>false</active>
@@ -48,6 +51,12 @@
 			<path>src\Entity Files\Player.java</path>
 			<source>true</source>
 			<index>2</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>src\Entity Files\Entity.java</path>
+			<source>true</source>
+			<index>3</index>
 			<active>true</active>
 		</docitem>
 	</open_files>

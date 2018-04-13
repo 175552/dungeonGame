@@ -12,10 +12,9 @@ public class Player extends Entity{
 	Player(){
 		xPos = 25;
 		yPos = 400;
-		movespeed = 5;
 		xOffset = 25;
 		yOffset = 25;
-		defaultMovespeed = 8;
+		defaultMovespeed = 6;
 		acceleration = 4;
 
 		activeWeapon = new BasicDagger();
