@@ -1,13 +1,19 @@
-import javax.swing.*;
+import javax.swing.Timer;
+import javax.swing.Action;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
+import javax.swing.JComponent;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.event.*;
-import java.awt.image.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import javax.imageio.ImageIO;
-import java.io.*;
+import java.io.File;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.HashSet;
@@ -34,13 +40,13 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 	DungeonGamePanel(){
 		createPanel();
-		idToHashMap();
-		World.setup();
-		drawWorld();
-		generateEnemies();
-		p1.setupEffectTimers();
+		idToHashMap();								//Sets up the hashmap for the world Cells
+		World.setup();								//Sets player in room in middle of world
+		drawWorld();								//Draws the world image once, to prevent lag
+		generateEnemies();							//Creates enemies at positions on map
+		p1.setupEffectTimers();						//Adds action commands to the internal timers for the player
 
-		updater.start();
+		updater.start();							//Starts the actual timer for redrawing and taking in inputs
 
 ////////////////////////////////////////////////////////////////////////////////////////////Create actions for movement
 		upStart = new AbstractAction(){
@@ -288,7 +294,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		super.paintComponent(g);
 		if(!(p1.getHP() < 0)){
 			g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
-			g.drawImage(p1.getSprite(), p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
+			p1.getAnimation().drawAnimation(g, p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
 			drawEnemies(g);
 			Graphics2D g2 = (Graphics2D)g.create();
 			g2.setColor(Color.white);
@@ -343,7 +349,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	private void drawEnemies(Graphics g){								//Encapsulated method for drawing the enemise
 		for(int i = 0; i < enemyList.size(); i++){
 			Enemies temp = enemyList.get(i);
-			g.drawImage(temp.getSprite(), temp.getX() - temp.getXOffset(), temp.getY() - temp.getYOffset(), 50, 50, this);
+			temp.getAnimation().drawAnimation(g, temp.getX() - temp.getXOffset(), temp.getY() - temp.getYOffset(), 50, 50, this);
 		}
 	}
 

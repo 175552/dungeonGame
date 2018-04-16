@@ -9,8 +9,14 @@ public class Enemies extends Entity{
 	int aggroRange = 250, holdAggroRange = 400;
 
 	Enemies(int x, int y){
+		
+		sprite = new Animation(1);			//Creates the animation for the enemy
 		try{
-			sprite = ImageIO.read(new File("../resources/textures/yellowSquare.png"));
+			BufferedImage[] tempImages = new BufferedImage[]{ImageIO.read(new File("../resources/textures/yellowSquare.png"))};
+			
+			int[] tempTimes = new int[]{1};
+			
+			sprite.createAnimation(tempImages, tempTimes);
 		}catch(IOException e){System.out.println("Enemy sprite not found.");}
 		defaultMovespeed = 3;
 		acceleration = 2;
@@ -87,7 +93,7 @@ public class Enemies extends Entity{
 		aggroed = false;
 	}
 
-	void attackPlayer(Player p){
+	void attackPlayer(Player p){									//Attacks the player in the direction where the player is closest
 		if(getVerticalDis(p) >= getHorizontalDis(p) && playerUp)
 			attackUp();
 		else if(getVerticalDis(p) >= getHorizontalDis(p) && playerDown)

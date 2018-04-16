@@ -9,17 +9,18 @@ import java.awt.*;
 abstract class Entity implements ActionListener {
 	int xPos, yPos, defaultMovespeed, acceleration, xVelocity, yVelocity, xOffset, yOffset;			//Position and movement information
 
-	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;
+	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;								//Stat info
 
 	boolean attacksUp, attacksDown, attacksLeft, attacksRight, hit, stunned, xMove, yMove;
-
-	BufferedImage sprite;
+	
+	Animation sprite;
 
 	Area attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 
 	Weapons activeWeapon;
 
 	Timer stunDelay = new Timer(500, this);
+	//Timer attackDelay = new Timer(activeWeapon.getAttackTime(), this);
 //////////////////////////////////////////////////////////Getter Methods
 	int getX(){
 		return xPos;
@@ -60,7 +61,7 @@ abstract class Entity implements ActionListener {
 	boolean getYMove(){
 		return yMove;
 	}
-	BufferedImage getSprite(){
+	Animation getAnimation(){
 		return sprite;
 	}
 	Area getAttackHitbox(){

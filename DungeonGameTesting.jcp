@@ -50,6 +50,9 @@
 			<folderitem>
 				<path>src\Equipment Files\Weapons\Daggers</path>
 			</folderitem>
+			<folderitem>
+				<path>src\Core Files</path>
+			</folderitem>
 			<fileitem>
 				<path>src\World Files\Cell.java</path>
 				<folder>src\World Files</folder>
@@ -83,19 +86,7 @@
 				<folder>src\Entity Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Display Files\DungeonGamePanel.java</path>
-				<folder>src\Display Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\Display Files\DungeonGameTesting.java</path>
-				<folder>src\Display Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\Display Files\GameFrame.java</path>
-				<folder>src\Display Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\Display Files\GamePanels.java</path>
+				<path>src\Display Files\Animation.java</path>
 				<folder>src\Display Files</folder>
 			</fileitem>
 			<fileitem>
@@ -125,6 +116,22 @@
 			<fileitem>
 				<path>src\Equipment Files\Weapons\Daggers\Daggers.java</path>
 				<folder>src\Equipment Files\Weapons\Daggers</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Core Files\DungeonGamePanel.java</path>
+				<folder>src\Core Files</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Core Files\DungeonGameTesting.java</path>
+				<folder>src\Core Files</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Core Files\GameFrame.java</path>
+				<folder>src\Core Files</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Core Files\GamePanels.java</path>
+				<folder>src\Core Files</folder>
 			</fileitem>
 		</include>
 	</files>
