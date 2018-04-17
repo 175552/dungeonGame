@@ -1,0 +1,13 @@
+../resources/textures/lava.png;30
+../resources/textures/purpleSquare.png;30
+END
+../resources/textures/stoneFloor.png;1
+END
+../resources/textures/stoneSpawnTile.png;1
+END
+../resources/textures/stoneTiles.png;1
+END
+../resources/textures/yellowSquare.png;1
+END
+../resources/textures/purpleSquare.png;1
+END

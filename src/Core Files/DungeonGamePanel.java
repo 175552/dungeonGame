@@ -34,13 +34,12 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 	Set<String> keysList = new HashSet<String>();
 
-	Map<Integer, BufferedImage> idToTexture = new HashMap<Integer, BufferedImage>();
-
 	ArrayList<Enemies> enemyList = new ArrayList<Enemies>();
 
 	DungeonGamePanel(){
 		createPanel();
-		idToHashMap();								//Sets up the hashmap for the world Cells
+		Cell.idToHashMap();							//Sets up the hashmap for the world Cells
+		Cell.idToAnimationMap();
 		World.setup();								//Sets player in room in middle of world
 		drawWorld();								//Draws the world image once, to prevent lag
 		generateEnemies();							//Creates enemies at positions on map
@@ -294,6 +293,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		super.paintComponent(g);
 		if(!(p1.getHP() < 0)){
 			g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
+			//World.getCurrentRoom().drawWorld(g, this);
 			p1.getAnimation().drawAnimation(g, p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
 			drawEnemies(g);
 			Graphics2D g2 = (Graphics2D)g.create();
@@ -335,7 +335,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 				for(int i = 0; i < World.worldLength; i++){
 					try{
 						int temp = input.nextInt();
-						g2.drawImage(idToTexture.get(temp), i*store, a*store, null);
+						g2.drawImage(Cell.idToTexture.get(temp), i*store, a*store, null);
 						World.roomIDs[i][a] = new Cell(temp);
 					}catch(Exception e){System.out.println("World draw error: " + e);}
 				}
@@ -351,20 +351,6 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			Enemies temp = enemyList.get(i);
 			temp.getAnimation().drawAnimation(g, temp.getX() - temp.getXOffset(), temp.getY() - temp.getYOffset(), 50, 50, this);
 		}
-	}
-
-
-/////////////////////////////////////////////////////////////////////////////Associates IDs with Buffered Images for drawing world.
-
-	private void idToHashMap(){
-		try{
-			Scanner temp = new Scanner(new File("../resources/Texture Links.txt"));
-			int i = 0;
-			while(temp.hasNextLine()){
-				idToTexture.put(i, ImageIO.read(new File(temp.nextLine())).getSubimage(0, 0, World.cellSize, World.cellSize));
-				i++;
-			}
-		}catch(Exception e){System.out.println("ID to HashMap file read error");}
 	}
 
 }

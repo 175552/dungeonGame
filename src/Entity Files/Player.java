@@ -21,10 +21,9 @@ public class Player extends Entity{
 
 
 		try{
-			BufferedImage[] tempImages = new BufferedImage[]{ImageIO.read(new File("../resources/textures/blueSquare.png")),
-				ImageIO.read(new File("../resources/textures/purpleSquare.png"))};
+			BufferedImage[] tempImages = new BufferedImage[]{ImageIO.read(new File("../resources/textures/blueSquare.png"))};
 
-			int[] tempTimes = new int[]{15, 30};
+			int[] tempTimes = new int[]{1};
 
 			sprite = new Animation(tempImages, tempTimes);
 		}catch(IOException e){System.out.println("Player image not found.");}

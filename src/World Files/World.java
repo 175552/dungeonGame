@@ -10,4 +10,8 @@ public class World{
 		currentX = xRoomCount/2;
 		currentY = yRoomCount/2;
 	}
+
+	static Room getCurrentRoom(){
+		return rooms[currentX][currentY];
+	}
 }

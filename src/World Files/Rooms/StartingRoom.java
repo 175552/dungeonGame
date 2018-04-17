@@ -1,8 +1,6 @@
 
 public class StartingRoom extends Room {
 
-	static Animation roomDrawing;
-
 	StartingRoom(){
 		filePath = "../maps/map.txt";
 		doorCount = 4;

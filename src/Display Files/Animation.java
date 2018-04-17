@@ -39,4 +39,8 @@ class Animation {
 		System.out.println("Image selection error");
 		return null;
 	}
+
+	int getMaxTime(){
+		return maxTime;
+	}
 }
