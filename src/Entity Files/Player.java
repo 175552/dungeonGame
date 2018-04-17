@@ -14,20 +14,19 @@ public class Player extends Entity{
 		yPos = 400;
 		xOffset = 25;
 		yOffset = 25;
-		defaultMovespeed = 6;
+		defaultMovespeed = 8;
 		acceleration = 4;
 
 		activeWeapon = new BasicDagger();
-		
-		sprite = new Animation(2);
+
 
 		try{
-			BufferedImage[] tempImages = new BufferedImage[]{ImageIO.read(new File("../resources/textures/blueSquare.png")), 
+			BufferedImage[] tempImages = new BufferedImage[]{ImageIO.read(new File("../resources/textures/blueSquare.png")),
 				ImageIO.read(new File("../resources/textures/purpleSquare.png"))};
-			
+
 			int[] tempTimes = new int[]{15, 30};
-			
-			sprite.createAnimation(tempImages, tempTimes);
+
+			sprite = new Animation(tempImages, tempTimes);
 		}catch(IOException e){System.out.println("Player image not found.");}
 	}
 

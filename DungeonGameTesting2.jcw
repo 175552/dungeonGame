@@ -3,6 +3,8 @@
 <workspace>
 	<settings>
 		<label>DungeonGameTesting</label>
+		<id>100</id>
+		<version>0</version>
 	</settings>
 	<users>
 		<user>
