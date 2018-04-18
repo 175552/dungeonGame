@@ -1,4 +1,9 @@
-../resources/textures/lava.png;1
+../resources/textures/lava0.png;5
+../resources/textures/lava1.png;10
+../resources/textures/lava2.png;15
+../resources/textures/lava3.png;20
+../resources/textures/lava2.png;25
+../resources/textures/lava1.png;30
 END
 ../resources/textures/stoneFloor.png;1
 END

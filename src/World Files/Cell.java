@@ -80,7 +80,7 @@ public class Cell {
 			Scanner input = new Scanner(new File("../resources/Animation Texture Links.txt"));
 			while(input.hasNextLine()){
 				temp = input.nextLine();
-				System.out.println(temp);
+				//System.out.println(temp);
 				if(temp.equals("END")){
 					idToAnim.put(num, new Animation(listToBIArray(links), listToIntArray(times)));
 					num++;

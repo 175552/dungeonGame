@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 public class Enemies extends Entity{
 
 	boolean playerUp, playerDown, playerLeft, playerRight, aggroed = true, hesitate;
-	boolean[] lastPlayerPos = new boolean[]{false, false, false, false}, storePPos = new boolean[]{false, false, false, false};
+	boolean[] lastPlayerPos = new boolean[]{false, false, false, false};
 
 	int aggroRange = 250, holdAggroRange = 400;
 
@@ -92,22 +92,18 @@ public class Enemies extends Entity{
 			if(playerUp != lastPlayerPos[0]){
 				hesitationDelay.start();	//Activates timer for removing hesitation effect.
 				hesitate = true;			//Activates hesitation effect
-				storePPos = Arrays.copyOf(lastPlayerPos, 4);
 			}
 			else if(playerDown != lastPlayerPos[1]){
 				hesitationDelay.start();
 				hesitate = true;
-				storePPos = Arrays.copyOf(lastPlayerPos, 4);
 			}
 			else if(playerLeft != lastPlayerPos[2]){
 				hesitationDelay.start();
 				hesitate = true;
-				storePPos = Arrays.copyOf(lastPlayerPos, 4);
 			}
 			else if(playerRight != lastPlayerPos[3]){
 				hesitationDelay.start();
 				hesitate = true;
-				storePPos = Arrays.copyOf(lastPlayerPos, 4);
 			}
 			lastPlayerPos = new boolean[]{playerUp, playerDown, playerLeft, playerRight};
 			////////////////////////////////Aggro code
@@ -123,26 +119,14 @@ public class Enemies extends Entity{
 	}
 
 	void attackPlayer(Player p){									//Attacks the player in the direction where the player is closest
-		if(!hesitate){
-			if(getVerticalDis(p) >= getHorizontalDis(p) && playerUp)
-				attackUp();
-			else if(getVerticalDis(p) >= getHorizontalDis(p) && playerDown)
-				attackDown();
-			else if(getHorizontalDis(p) >= getVerticalDis(p) && playerLeft)
-				attackLeft();
-			else if(getHorizontalDis(p) >= getVerticalDis(p) && playerRight)
-				attackRight();
-		}
-		else if(hesitate){
-			if(getVerticalDis(p) >= getHorizontalDis(p) && storePPos[0])
-				attackUp();
-			else if(getVerticalDis(p) >= getHorizontalDis(p) && storePPos[1])
-				attackDown();
-			else if(getHorizontalDis(p) >= getVerticalDis(p) && storePPos[2])
-				attackLeft();
-			else if(getHorizontalDis(p) >= getVerticalDis(p) && storePPos[3])
-				attackRight();
-		}
+		if(getVerticalDis(p) >= getHorizontalDis(p) && playerUp)
+			attackUp();
+		else if(getVerticalDis(p) >= getHorizontalDis(p) && playerDown)
+			attackDown();
+		else if(getHorizontalDis(p) >= getVerticalDis(p) && playerLeft)
+			attackLeft();
+		else if(getHorizontalDis(p) >= getVerticalDis(p) && playerRight)
+			attackRight();
 	}
 
 	void setupEffectTimers(){
