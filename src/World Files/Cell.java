@@ -8,14 +8,14 @@ public class Cell {
 
 	boolean canMove, canSpawn;
 
-	int id;
+	int id, x, y;
 
 	Scanner reader = new Scanner(new File("../resources/IDs and Properties.txt"));
 
 	static Map<Integer, BufferedImage> idToTexture = new HashMap<Integer, BufferedImage>();
 	static Map<Integer, Animation> idToAnim = new HashMap<Integer, Animation>();
 
-	Animation cellAnimation;
+	private Animation cellAnimation;
 
 	Cell(int idInput) throws Exception{
 		id = idInput;										//Gets the int id to be used for HashMaps
@@ -46,7 +46,10 @@ public class Cell {
 		}
 		else System.out.println("Spawn property error at tile type " + id);
 
-		cellAnimation = idToAnim.get(id);					//Assigns this cell the animation assigned to that ID from the HashMap
+		cellAnimation = new Animation(idToAnim.get(id));	/////IMPORTANT: Remember that the .get method doesn't return a copy of the value!
+															//The .get method gives a pointer to the value object, not a copy or version of it.
+															//For example, if two variables are assigned to a value in a Map, a change in one
+															//variable will result in a change in the other variable.
 	}
 
 	boolean moveCheck(){
@@ -77,9 +80,12 @@ public class Cell {
 			Scanner input = new Scanner(new File("../resources/Animation Texture Links.txt"));
 			while(input.hasNextLine()){
 				temp = input.nextLine();
+				System.out.println(temp);
 				if(temp.equals("END")){
 					idToAnim.put(num, new Animation(listToBIArray(links), listToIntArray(times)));
 					num++;
+					links.clear();
+					times.clear();
 				}
 				else{
 					String[] tempArray = temp.split(";");

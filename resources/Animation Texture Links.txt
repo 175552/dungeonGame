@@ -1,5 +1,4 @@
-../resources/textures/lava.png;30
-../resources/textures/purpleSquare.png;30
+../resources/textures/lava.png;1
 END
 ../resources/textures/stoneFloor.png;1
 END

@@ -133,7 +133,7 @@ public class Enemies extends Entity{
 			else if(getHorizontalDis(p) >= getVerticalDis(p) && playerRight)
 				attackRight();
 		}
-		else{
+		else if(hesitate){
 			if(getVerticalDis(p) >= getHorizontalDis(p) && storePPos[0])
 				attackUp();
 			else if(getVerticalDis(p) >= getHorizontalDis(p) && storePPos[1])

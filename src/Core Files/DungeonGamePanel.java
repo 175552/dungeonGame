@@ -292,8 +292,8 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		if(!(p1.getHP() < 0)){
-			g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
-			//World.getCurrentRoom().drawWorld(g, this);
+			//g.drawImage(worldImage, 0, 0, World.cellSize * World.worldLength, World.cellSize * World.worldHeight, this);
+			World.getCurrentRoom().drawRoom(g, this);
 			p1.getAnimation().drawAnimation(g, p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
 			drawEnemies(g);
 			Graphics2D g2 = (Graphics2D)g.create();
