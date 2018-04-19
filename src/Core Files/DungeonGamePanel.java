@@ -43,7 +43,6 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		World.setup();								//Sets player in room in middle of world
 		drawWorld();								//Draws the world image once, to prevent lag
 		generateEnemies();							//Creates enemies at positions on map
-		p1.setupEffectTimers();						//Adds action commands to the internal timers for the player
 
 		updater.start();							//Starts the actual timer for redrawing and taking in inputs
 
@@ -281,9 +280,6 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 					enemyList.add(new Enemies(i*World.cellSize + (World.cellSize/2), a*World.cellSize + (World.cellSize/2)));
 				}
 			}
-		}
-		for(int i = 0; i < enemyList.size(); i++){
-			enemyList.get(i).setupEffectTimers();
 		}
 	}
 

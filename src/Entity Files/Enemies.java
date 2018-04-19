@@ -30,6 +30,7 @@ public class Enemies extends Entity{
 		xOffset = 25;
 		yOffset = 25;
 		activeWeapon = new BrokenDagger();
+		setupEffectTimers();
 	}
 
 	void chasePlayer(Player p){

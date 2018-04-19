@@ -11,16 +11,26 @@ abstract class Entity implements ActionListener {
 
 	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;								//Stat info
 
-	boolean attacksUp, attacksDown, attacksLeft, attacksRight, hit, stunned, xMove, yMove;
-	
+	boolean attacksUp, attacksDown, attacksLeft, attacksRight, xMove, yMove;
+
+	boolean hit, stunned, attacking; //Effect booleans
+
 	Animation sprite;
 
 	Area attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 
 	Weapons activeWeapon;
-
 	Timer stunDelay = new Timer(500, this);
-	//Timer attackDelay = new Timer(activeWeapon.getAttackTime(), this);
+	Timer attackDelay = new Timer(1000/World.framerate, this);
+	Timer attackActive = new Timer(1000/World.framerate, this);
+
+//////////////////////////////////////////////////////////Setter Methods
+
+	void setupEffectTimers(){
+		stunDelay.setActionCommand("stun");
+		attackDelay.setActionCommand("attack charge");
+		attackActive.setActionCommand("attack");
+	}
 //////////////////////////////////////////////////////////Getter Methods
 	int getX(){
 		return xPos;
@@ -280,10 +290,6 @@ abstract class Entity implements ActionListener {
 		stunDelay.start();		//Starts timer to delay the stun going away.
 	}
 
-	void setupEffectTimers(){
-		stunDelay.setActionCommand("stun");
-	}
-
 	void showHPBar(Graphics g){
 		g.setColor(Color.red);
 		g.fillRect(getX() - getXOffset(), getY() + getYOffset() + 10, 2 * getXOffset(), 6);
@@ -318,6 +324,12 @@ abstract class Entity implements ActionListener {
 		if(e.getActionCommand().equals("stun")){
 			stunned = false;
 			stunDelay.stop();
+		}
+		if(e.getActionCommand().equals("attack charge")){
+			activeWeapon.chargeAttack(this);
+		}
+		if(e.getActionCommand().equals("attack")){
+			activeWeapon.doAttack(this);
 		}
 	}
 

@@ -39,28 +39,40 @@
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\Display Files\Animation.java</path>
+			<path>src\Core Files\DungeonGamePanel.java</path>
 			<source>true</source>
 			<index>0</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Core Files\DungeonGamePanel.java</path>
+			<path>src\Entity Files\Entity.java</path>
 			<source>true</source>
 			<index>1</index>
-			<active>false</active>
+			<active>true</active>
 		</docitem>
 		<docitem>
-			<path>src\Entity Files\Enemies.java</path>
+			<path>src\Equipment Files\Weapons\Weapons.java</path>
 			<source>true</source>
 			<index>2</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\World Files\Cell.java</path>
+			<path>src\Equipment Files\Weapons\Daggers\Daggers.java</path>
 			<source>true</source>
 			<index>3</index>
-			<active>true</active>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>src\Entity Files\Player.java</path>
+			<source>true</source>
+			<index>4</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>src\Entity Files\Enemies.java</path>
+			<source>true</source>
+			<index>5</index>
+			<active>false</active>
 		</docitem>
 	</open_files>
 </workspace_user>

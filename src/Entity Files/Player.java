@@ -27,6 +27,7 @@ public class Player extends Entity{
 
 			sprite = new Animation(tempImages, tempTimes);
 		}catch(IOException e){System.out.println("Player image not found.");}
+		setupEffectTimers();
 	}
 
 	void die(Graphics g){
