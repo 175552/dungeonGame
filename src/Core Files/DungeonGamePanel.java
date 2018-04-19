@@ -91,41 +91,57 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		upAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksUp = true;
+				if(!p1.attacking)
+					p1.attacking = true;
 			}
 		};
 		upAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksUp = false;
+				if(!p1.attacksLeft && !p1.attacksRight && !p1.attacksDown)
+					p1.attacking = false;
 			}
 		};
 		downAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksDown = true;
+				if(!p1.attacking)
+					p1.attacking = true;
 			}
 		};
 		downAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksDown = false;
+				if(!p1.attacksLeft && !p1.attacksRight && !p1.attacksUp)
+					p1.attacking = false;
 			}
 		};
 		leftAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksLeft = true;
+				if(!p1.attacking)
+					p1.attacking = true;
 			}
 		};
 		leftAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksLeft = false;
+				if(!p1.attacksUp && !p1.attacksRight && !p1.attacksDown)
+					p1.attacking = false;
 			}
 		};
 		rightAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksRight = true;
+				if(!p1.attacking)
+					p1.attacking = true;
 			}
 		};
 		rightAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				p1.attacksRight = false;
+				if(!p1.attacksLeft && !p1.attacksUp && !p1.attacksDown)
+					p1.attacking = false;
 			}
 		};
 
@@ -250,7 +266,10 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			}
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Combat
-		if(p1.attacksUp){
+
+		p1.getWeapon().handleAttack(p1);
+
+		/*if(p1.attacksUp){
 			p1.attackUp();
 		}
 		else if(p1.attacksDown){
@@ -261,8 +280,8 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		}
 		else if(p1.attacksRight){
 			p1.attackRight();
-		}
-		if(!p1.attacksUp && !p1.attacksDown && !p1.attacksLeft && !p1.attacksRight){
+		}*/
+		if(!p1.attacking){
 			p1.attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 		}
 		repaint();

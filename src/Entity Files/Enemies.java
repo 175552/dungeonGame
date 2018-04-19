@@ -33,6 +33,9 @@ public class Enemies extends Entity{
 		setupEffectTimers();
 	}
 
+	void setAnimations(){
+	}
+
 	void chasePlayer(Player p){
 
 		inertiaSetup();

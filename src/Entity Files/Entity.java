@@ -17,18 +17,20 @@ abstract class Entity implements ActionListener {
 
 	Animation sprite;
 
+	AnimationCollection library = new AnimationCollection();
+
 	Area attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 
 	Weapons activeWeapon;
 	Timer stunDelay = new Timer(500, this);
-	Timer attackDelay = new Timer(1000/World.framerate, this);
-	Timer attackActive = new Timer(1000/World.framerate, this);
+	Timer attackActive = new Timer(250, this);
 
 //////////////////////////////////////////////////////////Setter Methods
 
+	abstract void setAnimations();
+
 	void setupEffectTimers(){
 		stunDelay.setActionCommand("stun");
-		attackDelay.setActionCommand("attack charge");
 		attackActive.setActionCommand("attack");
 	}
 //////////////////////////////////////////////////////////Getter Methods
@@ -324,9 +326,6 @@ abstract class Entity implements ActionListener {
 		if(e.getActionCommand().equals("stun")){
 			stunned = false;
 			stunDelay.stop();
-		}
-		if(e.getActionCommand().equals("attack charge")){
-			activeWeapon.chargeAttack(this);
 		}
 		if(e.getActionCommand().equals("attack")){
 			activeWeapon.doAttack(this);

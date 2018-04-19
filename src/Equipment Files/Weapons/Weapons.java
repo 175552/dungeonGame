@@ -5,7 +5,7 @@ abstract class Weapons extends Equipment {
 																//Direction indexes are [Up, Down, Left, Right]
 	int damage, knockback, attackTime, attackDuration;
 
-	int chargeTime, maxChargeTime = attackTime/World.framerate;
+	int chargeTime, maxChargeTime;
 
 	WeaponHitboxes getHitboxes(){
 		return hb;
@@ -31,17 +31,22 @@ abstract class Weapons extends Equipment {
 		return attackDuration;
 	}
 
-	void chargeAttack(Entity e){
+	void handleAttack(Entity e){
 		if(chargeTime != 0 && chargeTime != maxChargeTime && !e.attacking){
 			chargeTime = 0;
 		}
-		else if(chargeTime == maxChargeTime){
+		else if(attackReady()){
 			if(!e.attacking){
 				doAttack(e);
 				chargeTime = 0;
 			}
 		}
 		else chargeTime++;
+		System.out.println(chargeTime);
+	}
+
+	void cancelAttack(){
+		chargeTime = 0;
 	}
 
 	void doAttack(Entity e){
@@ -53,6 +58,12 @@ abstract class Weapons extends Equipment {
 			e.attackLeft();
 		else if(e.attacksRight)
 			e.attackRight();
-		else System.out.println("Attacking error: " + e);
+		else System.out.println("Attacking error");
+	}
+
+	boolean attackReady(){
+		if(chargeTime == maxChargeTime)
+			return true;
+		else return false;
 	}
 }

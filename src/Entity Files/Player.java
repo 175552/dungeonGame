@@ -19,14 +19,8 @@ public class Player extends Entity{
 
 		activeWeapon = new BasicDagger();
 
-
-		try{
-			BufferedImage[] tempImages = new BufferedImage[]{ImageIO.read(new File("../resources/textures/blueSquare.png"))};
-
-			int[] tempTimes = new int[]{1};
-
-			sprite = new Animation(tempImages, tempTimes);
-		}catch(IOException e){System.out.println("Player image not found.");}
+		setAnimations();
+		sprite = library.get("idle");
 		setupEffectTimers();
 	}
 
@@ -35,5 +29,12 @@ public class Player extends Entity{
 		g.setColor(Color.black);
 		g.setFont(new Font("Serif", Font.BOLD, fontSize));
 		g.drawString("YOU DIED", (World.worldLength * World.cellSize)/2 - fontSize, (World.worldHeight * World.cellSize)/2 - fontSize);
+	}
+
+	void setAnimations(){
+		try{;
+			library.assignAnim("idle", new Animation(new File("../resources/lib/player/idle.txt")));
+			library.assignAnim("aRight", new Animation(new File("../resources/lib/player/aR.txt")));
+		}catch(Exception e){System.out.println("Player image file error");}
 	}
 }

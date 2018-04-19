@@ -62,17 +62,5 @@
 			<index>3</index>
 			<active>false</active>
 		</docitem>
-		<docitem>
-			<path>src\Entity Files\Player.java</path>
-			<source>true</source>
-			<index>4</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Entity Files\Enemies.java</path>
-			<source>true</source>
-			<index>5</index>
-			<active>false</active>
-		</docitem>
 	</open_files>
 </workspace_user>

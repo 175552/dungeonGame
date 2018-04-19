@@ -96,7 +96,7 @@ public class Cell {
 		}catch(Exception e){System.out.println("Animation ID to HashMap file read error");}
 	}
 
-	private static BufferedImage[] listToBIArray(List<String> links){
+	public static BufferedImage[] listToBIArray(List<String> links){
 		BufferedImage[] images = new BufferedImage[links.size()];
 		for(int i = 0; i < images.length; i++){
 			try{
@@ -106,7 +106,7 @@ public class Cell {
 		return images;
 	}
 
-	private static int[] listToIntArray(List<Integer> nums){
+	public static int[] listToIntArray(List<Integer> nums){
 		int[] numArray = new int[nums.size()];
 		for(int i = 0; i < numArray.length; i++){
 			numArray[i] = nums.get(i);

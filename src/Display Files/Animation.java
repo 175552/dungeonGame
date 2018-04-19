@@ -1,6 +1,9 @@
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.util.*;
 
 class Animation {
 
@@ -29,7 +32,28 @@ class Animation {
 		}
 		else System.out.println("Input arrays are not equal in length: Images- " + imagesIn.length + "; Times- " + timesIn.length);
 	}
-	
+
+	Animation(File file){
+		Scanner input = null;
+		try{
+			input = new Scanner(file);
+		}
+		catch(Exception e){
+			System.out.println("Animation File Read error");
+		}
+		List<String> links = new ArrayList<String>();
+		List<Integer> timesList = new ArrayList<Integer>();
+		String temp = "";
+		while(input.hasNextLine()){
+			temp = input.nextLine();
+			String[] tempArray = temp.split(";");
+			links.add(tempArray[0]);
+			timesList.add(Integer.parseInt(tempArray[1]));
+		}
+		images = Cell.listToBIArray(links);
+		times = Cell.listToIntArray(timesList);
+	}
+
 	Animation(Animation test){
 		images = test.getBIArray();
 		times = test.getTimesArray();
@@ -50,11 +74,11 @@ class Animation {
 		System.out.println("Image selection error");
 		return null;
 	}
-	
+
 	private BufferedImage[] getBIArray(){
 		return images;
 	}
-	
+
 	private int[] getTimesArray(){
 		return times;
 	}
