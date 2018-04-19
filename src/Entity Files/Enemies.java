@@ -22,6 +22,8 @@ public class Enemies extends Entity{
 			int[] tempTimes = new int[]{1};
 
 			sprite = new Animation(tempImages, tempTimes);
+			library.assignAnim("idle", sprite);
+			library.assignAnim("aRight", sprite);
 		}catch(IOException e){System.out.println("Enemy sprite not found.");}
 		defaultMovespeed = 3;
 		acceleration = 2;
@@ -111,10 +113,23 @@ public class Enemies extends Entity{
 			}
 			lastPlayerPos = new boolean[]{playerUp, playerDown, playerLeft, playerRight};
 			////////////////////////////////Aggro code
-			if(aggroRange > getEntityDis(p))			//If player is in enemy's aggro range, enemy is aggroed
+			if(aggroRange > getEntityDis(p) && !attackActive.isRunning()){			//If player is in enemy's aggro range, enemy is aggroed
 				aggroed = true;
-			else if(aggroed && holdAggroRange < getEntityDis(p))//If enemy is aggroed and player moves out of a certain range, disable aggro
+				attacking = true;
+				activeWeapon.chargeAttack(this);
+				System.out.println(activeWeapon.chargeTime);
+
+				if((int)Math.ceil(activeWeapon.getRange() * 1.2) > getEntityDis(p) && activeWeapon.attackReady()){
+					targetPlayer(p);
+					startAttack();
+				}
+			}
+			else if(aggroed && holdAggroRange < getEntityDis(p)){	//If enemy is aggroed and player moves out
+																	//of a certain range, disable aggro
 				aggroed = false;
+				attacking = false;
+				activeWeapon.cancelAttack(this);
+			}
 		}
 	}
 
@@ -122,15 +137,15 @@ public class Enemies extends Entity{
 		aggroed = false;
 	}
 
-	void attackPlayer(Player p){									//Attacks the player in the direction where the player is closest
+	void targetPlayer(Player p){									//Attacks the player in the direction where the player is closest
 		if(getVerticalDis(p) >= getHorizontalDis(p) && playerUp)
-			attackUp();
+			attacksUp = true;
 		else if(getVerticalDis(p) >= getHorizontalDis(p) && playerDown)
-			attackDown();
+			attacksDown = true;
 		else if(getHorizontalDis(p) >= getVerticalDis(p) && playerLeft)
-			attackLeft();
+			attacksLeft = true;
 		else if(getHorizontalDis(p) >= getVerticalDis(p) && playerRight)
-			attackRight();
+			attacksRight = true;
 	}
 
 	void setupEffectTimers(){

@@ -31,21 +31,15 @@ abstract class Weapons extends Equipment {
 		return attackDuration;
 	}
 
-	void handleAttack(Entity e){
+	void chargeAttack(Entity e){
 		if(chargeTime != 0 && chargeTime != maxChargeTime && !e.attacking){
 			chargeTime = 0;
 		}
-		else if(attackReady()){
-			if(!e.attacking){
-				doAttack(e);
-				chargeTime = 0;
-			}
-		}
-		else chargeTime++;
-		System.out.println(chargeTime);
+		else if(chargeTime < maxChargeTime && e.attacking)
+			chargeTime++;
 	}
 
-	void cancelAttack(){
+	void cancelAttack(Entity e){
 		chargeTime = 0;
 	}
 
@@ -56,9 +50,11 @@ abstract class Weapons extends Equipment {
 			e.attackDown();
 		else if(e.attacksLeft)
 			e.attackLeft();
-		else if(e.attacksRight)
+		else if(e.attacksRight){
 			e.attackRight();
-		else System.out.println("Attacking error");
+			e.sprite = e.library.get("aRight");
+		}
+		e.attacking = false;
 	}
 
 	boolean attackReady(){

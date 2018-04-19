@@ -33,6 +33,10 @@ abstract class Entity implements ActionListener {
 		stunDelay.setActionCommand("stun");
 		attackActive.setActionCommand("attack");
 	}
+
+	void startAttack(){
+		attackActive.start();
+	}
 //////////////////////////////////////////////////////////Getter Methods
 	int getX(){
 		return xPos;
@@ -328,7 +332,12 @@ abstract class Entity implements ActionListener {
 			stunDelay.stop();
 		}
 		if(e.getActionCommand().equals("attack")){
-			activeWeapon.doAttack(this);
+			attacksUp = false;
+			attacksDown = false;
+			attacksLeft = false;
+			attacksRight = false;
+			sprite = library.get("idle");
+			attackActive.stop();
 		}
 	}
 

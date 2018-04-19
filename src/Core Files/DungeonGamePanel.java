@@ -28,6 +28,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	BufferedImage worldImage, playerImage;
 
 	Player p1 = new Player();
+	boolean arrUp, arrDown, arrLeft, arrRight;
 
 	Action upStart, upEnd, downStart, downEnd, leftStart, leftEnd, rightStart, rightEnd;
 	Action upAS, upAE, downAS, downAE, leftAS, leftAE, rightAS, rightAE;
@@ -90,58 +91,82 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////Actions for attacking
 		upAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksUp = true;
+				arrUp = true;
 				if(!p1.attacking)
 					p1.attacking = true;
 			}
 		};
 		upAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksUp = false;
-				if(!p1.attacksLeft && !p1.attacksRight && !p1.attacksDown)
+				if(p1.getWeapon().attackReady()){
+					p1.attacksUp = true;
+					p1.startAttack();
+				}
+				if(!arrLeft && !arrRight && !arrDown){
 					p1.attacking = false;
+					p1.getWeapon().cancelAttack(p1);
+				}
+				arrUp = false;
 			}
 		};
 		downAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksDown = true;
+				arrDown = true;
 				if(!p1.attacking)
 					p1.attacking = true;
 			}
 		};
 		downAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksDown = false;
-				if(!p1.attacksLeft && !p1.attacksRight && !p1.attacksUp)
+				if(p1.getWeapon().attackReady()){
+					p1.attacksDown = true;
+					p1.startAttack();
+				}
+				if(!arrLeft && !arrRight && !arrUp){
 					p1.attacking = false;
+					p1.getWeapon().cancelAttack(p1);
+				}
+				arrDown = false;
 			}
 		};
 		leftAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksLeft = true;
+				arrLeft = true;
 				if(!p1.attacking)
 					p1.attacking = true;
 			}
 		};
 		leftAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksLeft = false;
-				if(!p1.attacksUp && !p1.attacksRight && !p1.attacksDown)
+				if(p1.getWeapon().attackReady()){
+					p1.attacksLeft = true;
+					p1.startAttack();
+				}
+				if(!arrUp && !arrRight && !arrDown){
 					p1.attacking = false;
+					p1.getWeapon().cancelAttack(p1);
+				}
+				arrLeft = false;
 			}
 		};
 		rightAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksRight = true;
+				arrRight = true;
 				if(!p1.attacking)
 					p1.attacking = true;
 			}
 		};
 		rightAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.attacksRight = false;
-				if(!p1.attacksLeft && !p1.attacksUp && !p1.attacksDown)
+				if(p1.getWeapon().attackReady()){
+					p1.attacksRight = true;
+					p1.startAttack();
+				}
+				if(!arrLeft && !arrUp && !arrDown){
 					p1.attacking = false;
+					p1.getWeapon().cancelAttack(p1);
+				}
+				arrRight = false;
 			}
 		};
 
@@ -253,7 +278,6 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			enemyList.get(i).chasePlayer(p1);	//Have enemy chase the player
 
 			if(enemyList.get(i).isEntityInRange(p1)){
-				enemyList.get(i).attackPlayer(p1);
 				////////////////////Methods to run when player is hit
 				if(enemyList.get(i).getAttackHitbox().intersects(pBounds[0] - pBounds[2],
 					pBounds[1] - pBounds[3], pBounds[2] * 2, pBounds[3] * 2)){
@@ -267,21 +291,12 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Combat
 
-		p1.getWeapon().handleAttack(p1);
+		if(p1.attacking)
+			p1.getWeapon().chargeAttack(p1);
+		if(!p1.attacking)
+			p1.getWeapon().doAttack(p1);
 
-		/*if(p1.attacksUp){
-			p1.attackUp();
-		}
-		else if(p1.attacksDown){
-			p1.attackDown();
-		}
-		else if(p1.attacksLeft){
-			p1.attackLeft();
-		}
-		else if(p1.attacksRight){
-			p1.attackRight();
-		}*/
-		if(!p1.attacking){
+		if(!p1.attacksUp && !p1.attacksDown && !p1.attacksLeft && !p1.attacksRight){
 			p1.attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 		}
 		repaint();
