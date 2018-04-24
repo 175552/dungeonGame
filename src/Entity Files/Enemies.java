@@ -4,15 +4,17 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 
 public class Enemies extends Entity{
 
 	boolean playerUp, playerDown, playerLeft, playerRight, aggroed = true, hesitate;
 	boolean[] lastPlayerPos = new boolean[]{false, false, false, false};
 
-	int aggroRange = 250, holdAggroRange = 400;
+	int aggroRange = 250, holdAggroRange = 400, currentTime = 0, maxTime;
 
-	Timer hesitationDelay = new Timer(1000, this);
+	Timer hesitationDelay = new Timer(500, this), eAtkTimer = new Timer(1000/World.framerate, this);
 
 	Enemies(int x, int y){
 
@@ -32,6 +34,7 @@ public class Enemies extends Entity{
 		xOffset = 25;
 		yOffset = 25;
 		activeWeapon = new BrokenDagger();
+		maxTime = (int)Math.ceil((activeWeapon.getAttackDuration()/1000.0) * World.framerate);
 		setupEffectTimers();
 	}
 
@@ -112,23 +115,32 @@ public class Enemies extends Entity{
 				hesitate = true;
 			}
 			lastPlayerPos = new boolean[]{playerUp, playerDown, playerLeft, playerRight};
-			////////////////////////////////Aggro code
-			if(aggroRange > getEntityDis(p) && !attackActive.isRunning()){			//If player is in enemy's aggro range, enemy is aggroed
+			////////////////////////////////Aggro and combat code
+			if(aggroRange > getEntityDis(p)){			//If player is in enemy's aggro range, enemy is aggroed
 				aggroed = true;
-				attacking = true;
-				activeWeapon.chargeAttack(this);
-				System.out.println(activeWeapon.chargeTime);
-
-				if((int)Math.ceil(activeWeapon.getRange() * 1.2) > getEntityDis(p) && activeWeapon.attackReady()){
-					targetPlayer(p);
-					startAttack();
-				}
 			}
 			else if(aggroed && holdAggroRange < getEntityDis(p)){	//If enemy is aggroed and player moves out
 																	//of a certain range, disable aggro
 				aggroed = false;
 				attacking = false;
 				activeWeapon.cancelAttack(this);
+			}
+			if(!eAtkTimer.isRunning()){						//If the enemy is not currently attacking...
+				if(activeWeapon.attackReady()){		//If it's attack is ready, begin to attack
+					attackHitbox.reset();
+					eAtkTimer.start();
+				}
+				else if(getEntityDis(p) <= (int)(2 * activeWeapon.getRange())){//If it's not ready, then continue to
+																				 //charge if p is in range
+					attacking = true;
+					activeWeapon.chargeAttack(this);
+				}
+				else if(getEntityDis(p) > (int)(2 * activeWeapon.getRange())){//If it's not ready and p is not in range,
+																				//cancel the attack
+					attacking = false;
+					attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
+					activeWeapon.cancelAttack(this);
+				}
 			}
 		}
 	}
@@ -151,11 +163,31 @@ public class Enemies extends Entity{
 	void setupEffectTimers(){
 		super.setupEffectTimers();
 		hesitationDelay.setActionCommand("hesitate");
+		eAtkTimer.setActionCommand("attack");
+	}
+
+	Timer getAttackTimer(){
+		return eAtkTimer;
 	}
 
 	public void actionPerformed(ActionEvent e){
 		super.actionPerformed(e);
 		if(e.getActionCommand().equals("hesitate"))
 			hesitate = false;
+		if(e.getActionCommand().equals("attack")){
+			targetPlayer(World.p1);
+			activeWeapon.doAttack(this);
+			currentTime++;
+			if(currentTime == maxTime){
+				activeWeapon.cancelAttack(this);
+				currentTime = 0;
+				attacksUp = false;
+				attacksDown = false;
+				attacksLeft = false;
+				attacksRight = false;
+				sprite = library.get("idle");
+				eAtkTimer.stop();
+			}
+		}
 	}
 }

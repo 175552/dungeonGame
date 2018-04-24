@@ -31,6 +31,10 @@ abstract class Weapons extends Equipment {
 		return attackDuration;
 	}
 
+	int getTime(){
+		return chargeTime;
+	}
+
 	void chargeAttack(Entity e){
 		if(chargeTime != 0 && chargeTime != maxChargeTime && !e.attacking){
 			chargeTime = 0;
@@ -44,6 +48,7 @@ abstract class Weapons extends Equipment {
 	}
 
 	void doAttack(Entity e){
+		getHitboxes().moveHitbox(e, e.getX() - e.getXOffset(), e.getY() - e.getYOffset());
 		if(e.attacksUp)
 			e.attackUp();
 		else if(e.attacksDown)

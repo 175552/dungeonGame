@@ -27,7 +27,6 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 	BufferedImage worldImage, playerImage;
 
-	Player p1 = new Player();
 	boolean arrUp, arrDown, arrLeft, arrRight;
 
 	Action upStart, upEnd, downStart, downEnd, leftStart, leftEnd, rightStart, rightEnd;
@@ -39,8 +38,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 	DungeonGamePanel(){
 		createPanel();
-		Cell.idToHashMap();							//Sets up the hashmap for the world Cells
-		Cell.idToAnimationMap();
+		Cell.idToAnimationMap();					//Creates hashmap assigning animations to cells
 		World.setup();								//Sets player in room in middle of world
 		drawWorld();								//Draws the world image once, to prevent lag
 		generateEnemies();							//Creates enemies at positions on map
@@ -50,61 +48,61 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 ////////////////////////////////////////////////////////////////////////////////////////////Create actions for movement
 		upStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesUp = true;
+				getPlayer().movesUp = true;
 			}
 		};
 		upEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesUp = false;
+				getPlayer().movesUp = false;
 			}
 		};
 		downStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesDown = true;
+				getPlayer().movesDown = true;
 			}
 		};
 		downEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesDown = false;
+				getPlayer().movesDown = false;
 			}
 		};
 		leftStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesLeft = true;
+				getPlayer().movesLeft = true;
 			}
 		};
 		leftEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesLeft = false;
+				getPlayer().movesLeft = false;
 			}
 		};
 		rightStart = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesRight = true;
+				getPlayer().movesRight = true;
 			}
 		};
 		rightEnd = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				p1.movesRight = false;
+				getPlayer().movesRight = false;
 			}
 		};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////Actions for attacking
 		upAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				arrUp = true;
-				if(!p1.attacking)
-					p1.attacking = true;
+				if(!getPlayer().attacking)
+					getPlayer().attacking = true;
 			}
 		};
 		upAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				if(p1.getWeapon().attackReady()){
-					p1.attacksUp = true;
-					p1.startAttack();
+				if(getPlayer().getWeapon().attackReady()){
+					getPlayer().attacksUp = true;
+					getPlayer().startAttack();
 				}
 				if(!arrLeft && !arrRight && !arrDown){
-					p1.attacking = false;
-					p1.getWeapon().cancelAttack(p1);
+					getPlayer().attacking = false;
+					getPlayer().getWeapon().cancelAttack(getPlayer());
 				}
 				arrUp = false;
 			}
@@ -112,19 +110,19 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		downAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				arrDown = true;
-				if(!p1.attacking)
-					p1.attacking = true;
+				if(!getPlayer().attacking)
+					getPlayer().attacking = true;
 			}
 		};
 		downAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				if(p1.getWeapon().attackReady()){
-					p1.attacksDown = true;
-					p1.startAttack();
+				if(getPlayer().getWeapon().attackReady()){
+					getPlayer().attacksDown = true;
+					getPlayer().startAttack();
 				}
 				if(!arrLeft && !arrRight && !arrUp){
-					p1.attacking = false;
-					p1.getWeapon().cancelAttack(p1);
+					getPlayer().attacking = false;
+					getPlayer().getWeapon().cancelAttack(getPlayer());
 				}
 				arrDown = false;
 			}
@@ -132,19 +130,19 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		leftAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				arrLeft = true;
-				if(!p1.attacking)
-					p1.attacking = true;
+				if(!getPlayer().attacking)
+					getPlayer().attacking = true;
 			}
 		};
 		leftAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				if(p1.getWeapon().attackReady()){
-					p1.attacksLeft = true;
-					p1.startAttack();
+				if(getPlayer().getWeapon().attackReady()){
+					getPlayer().attacksLeft = true;
+					getPlayer().startAttack();
 				}
 				if(!arrUp && !arrRight && !arrDown){
-					p1.attacking = false;
-					p1.getWeapon().cancelAttack(p1);
+					getPlayer().attacking = false;
+					getPlayer().getWeapon().cancelAttack(getPlayer());
 				}
 				arrLeft = false;
 			}
@@ -152,19 +150,19 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		rightAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
 				arrRight = true;
-				if(!p1.attacking)
-					p1.attacking = true;
+				if(!getPlayer().attacking)
+					getPlayer().attacking = true;
 			}
 		};
 		rightAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				if(p1.getWeapon().attackReady()){
-					p1.attacksRight = true;
-					p1.startAttack();
+				if(getPlayer().getWeapon().attackReady()){
+					getPlayer().attacksRight = true;
+					getPlayer().startAttack();
 				}
 				if(!arrLeft && !arrUp && !arrDown){
-					p1.attacking = false;
-					p1.getWeapon().cancelAttack(p1);
+					getPlayer().attacking = false;
+					getPlayer().getWeapon().cancelAttack(getPlayer());
 				}
 				arrRight = false;
 			}
@@ -230,59 +228,59 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 ////////////////////////////////////////////////////////////////////////////////////////////////For normal movement
 
-		p1.inertiaSetup(); ///////////Sets player's booleans for moving in the x and y to false.
+		getPlayer().inertiaSetup(); ///////////Sets player's booleans for moving in the x and y to false.
 
-		if(p1.movesUp){			////////////Handles taking in input for movement
-			p1.moveUp();
+		if(getPlayer().movesUp){			////////////Handles taking in input for movement
+			getPlayer().moveUp();
 		}
-		else if(p1.movesDown){
-			p1.moveDown();
+		else if(getPlayer().movesDown){
+			getPlayer().moveDown();
 		}
-		if(p1.movesLeft){
-			p1.moveLeft();
+		if(getPlayer().movesLeft){
+			getPlayer().moveLeft();
 		}
-		else if(p1.movesRight){
-			p1.moveRight();
+		else if(getPlayer().movesRight){
+			getPlayer().moveRight();
 		}
 
-		p1.move();			//Handles movement and stops player if it hits a wall
+		getPlayer().move();			//Handles movement and stops player if it hits a wall
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////For exact movement to line up with obstacles
-		if(p1.movesUp && !p1.checkUp()){
-			p1.moveUpDis((p1.getY() - p1.getYOffset()) % World.cellSize);
+		if(getPlayer().movesUp && !getPlayer().checkUp()){
+			getPlayer().moveUpDis((getPlayer().getY() - getPlayer().getYOffset()) % World.cellSize);
 		}
-		else if(p1.movesDown && !p1.checkDown()){
-			if((p1.getY() + p1.getYOffset()) % World.cellSize != 0)
-				p1.moveDownDis(World.cellSize - ((p1.getY() + p1.getYOffset()) % World.cellSize));
+		else if(getPlayer().movesDown && !getPlayer().checkDown()){
+			if((getPlayer().getY() + getPlayer().getYOffset()) % World.cellSize != 0)
+				getPlayer().moveDownDis(World.cellSize - ((getPlayer().getY() + getPlayer().getYOffset()) % World.cellSize));
 		}
-		if(p1.movesLeft && !p1.checkLeft()){
-			p1.moveLeftDis((p1.getX() - p1.getXOffset()) % World.cellSize);
+		if(getPlayer().movesLeft && !getPlayer().checkLeft()){
+			getPlayer().moveLeftDis((getPlayer().getX() - getPlayer().getXOffset()) % World.cellSize);
 		}
-		else if(p1.movesRight && !p1.checkRight()){
-			if((p1.getX() + p1.getXOffset()) % World.cellSize != 0)
-				p1.moveRightDis(World.cellSize - ((p1.getX() + p1.getXOffset()) % World.cellSize));
+		else if(getPlayer().movesRight && !getPlayer().checkRight()){
+			if((getPlayer().getX() + getPlayer().getXOffset()) % World.cellSize != 0)
+				getPlayer().moveRightDis(World.cellSize - ((getPlayer().getX() + getPlayer().getXOffset()) % World.cellSize));
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Enemy commands
 		for(int i = 0; i < enemyList.size(); i++){ //Iterates through every enemy on screen
-			enemyList.get(i).checkCurrentPos(p1);
+			enemyList.get(i).checkCurrentPos(getPlayer());
 			int[] bounds = enemyList.get(i).getBounds();	//Gets hitbox of enemy
-			int[] pBounds = p1.getBounds();					//Player hitbox
+			int[] pBounds = getPlayer().getBounds();					//Player hitbox
 
 			/////////////Methods to be run when enemy is hit
-			if(p1.getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
-				enemyList.get(i).loseHP(p1.getWeapon().getDamage());	//Do damage to hit enemy
-				enemyList.get(i).hit(p1);
+			if(getPlayer().getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
+				enemyList.get(i).loseHP(getPlayer().getWeapon().getDamage());	//Do damage to hit enemy
+				enemyList.get(i).hit(getPlayer());
 			}
 
-			enemyList.get(i).chasePlayer(p1);	//Have enemy chase the player
+			enemyList.get(i).chasePlayer(getPlayer());	//Have enemy chase the player
 
-			if(enemyList.get(i).isEntityInRange(p1)){
+			if(enemyList.get(i).isEntityInRange(getPlayer())){
 				////////////////////Methods to run when player is hit
 				if(enemyList.get(i).getAttackHitbox().intersects(pBounds[0] - pBounds[2],
 					pBounds[1] - pBounds[3], pBounds[2] * 2, pBounds[3] * 2)){
-					p1.loseHP(enemyList.get(i).getWeapon().getDamage());
-					p1.hit(enemyList.get(i));
+					getPlayer().loseHP(enemyList.get(i).getWeapon().getDamage());
+					getPlayer().hit(enemyList.get(i));
 				}
 			}
 			if(enemyList.get(i).getHP() <= 0){	//If an enemy dies, remove it from the arraylist
@@ -291,16 +289,16 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Combat
 
-		if(p1.attacking)
-			p1.getWeapon().chargeAttack(p1);
-		if(!p1.attacking)
-			p1.getWeapon().doAttack(p1);
+		if(getPlayer().attacking)
+			getPlayer().getWeapon().chargeAttack(getPlayer());
+		if(!getPlayer().attacking)
+			getPlayer().getWeapon().doAttack(getPlayer());
 
-		if(!p1.attacksUp && !p1.attacksDown && !p1.attacksLeft && !p1.attacksRight){
-			p1.attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
+		if(!getPlayer().attacksUp && !getPlayer().attacksDown && !getPlayer().attacksLeft && !getPlayer().attacksRight){
+			getPlayer().attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 		}
 		repaint();
-		if(p1.getHP() < 0){
+		if(getPlayer().getHP() < 0){
 			updater.stop();
 		}
 	}
@@ -321,30 +319,31 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 //////////////////////////////////////////////////////////////////////////////////////////////////Draw player and world image
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-		if(!(p1.getHP() < 0)){
+		if(!(getPlayer().getHP() < 0)){
 			World.getCurrentRoom().drawRoom(g, this);
-			p1.getAnimation().drawAnimation(g, p1.getX() - p1.getXOffset(), p1.getY() - p1.getYOffset(), 50, 50, this);
+			getPlayer().getAnimation().drawAnimation(g, getPlayer().getX() - getPlayer().getXOffset(),
+															getPlayer().getY() - getPlayer().getYOffset(), 50, 50, this);
 			drawEnemies(g);
 			Graphics2D g2 = (Graphics2D)g.create();
 			g2.setColor(Color.white);
-			if(p1.attacksUp || p1.attacksLeft || p1.attacksRight || p1.attacksDown){
-				p1.drawAttack(g);
+			if(getPlayer().attacksUp || getPlayer().attacksLeft || getPlayer().attacksRight || getPlayer().attacksDown){
+				getPlayer().drawAttack(g);
 			}
-			if(p1.checkIfHit()){
-				p1.showHPBar(g);
+			if(getPlayer().checkIfHit()){
+				getPlayer().showHPBar(g);
 			}
 			for(int i = 0; i < enemyList.size(); i++){
-				Entity e = enemyList.get(i);
+				Enemies e = enemyList.get(i);
 				if(enemyList.get(i).checkIfHit()){
 					e.showHPBar(g);
 				}
-				if(enemyList.get(i).isEntityInRange(p1)){
+				if(e.getAttackTimer().isRunning()){
 					e.drawAttack(g);
 				}
 			}
 		}
 		else{
-			p1.die(g);
+			getPlayer().die(g);
 		}
 	}
 
@@ -371,6 +370,10 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			}
 
 		}catch(Exception e){System.out.println("World file read error.");}
+	}
+
+	Player getPlayer(){
+		return World.p1;
 	}
 
 

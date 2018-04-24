@@ -9,6 +9,8 @@ public class Player extends Entity{
 
 	boolean movesUp, movesDown, movesLeft, movesRight;
 
+	Timer attackActive = new Timer(100, this);
+
 	Player(){
 		xPos = 25;
 		yPos = 400;
@@ -24,6 +26,10 @@ public class Player extends Entity{
 		setupEffectTimers();
 	}
 
+	Timer getAttackTimer(){
+		return attackActive;
+	}
+
 	void die(Graphics g){
 		int fontSize = 100;
 		g.setColor(Color.black);
@@ -36,5 +42,27 @@ public class Player extends Entity{
 			library.assignAnim("idle", new Animation(new File("../resources/lib/player/idle.txt")));
 			library.assignAnim("aRight", new Animation(new File("../resources/lib/player/aR.txt")));
 		}catch(Exception e){System.out.println("Player image file error");}
+	}
+
+	void setupEffectTimers(){
+		super.setupEffectTimers();
+		attackActive.setActionCommand("attack");
+	}
+
+	void startAttack(){
+		attackActive.start();
+	}
+
+	public void actionPerformed(ActionEvent e){
+		super.actionPerformed(e);
+		if(e.getActionCommand().equals("attack")){
+			attacksUp = false;
+			attacksDown = false;
+			attacksLeft = false;
+			attacksRight = false;
+			activeWeapon.cancelAttack(this);
+			sprite = library.get("idle");
+			attackActive.stop();
+		}
 	}
 }

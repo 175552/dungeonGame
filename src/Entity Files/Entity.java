@@ -23,7 +23,6 @@ abstract class Entity implements ActionListener {
 
 	Weapons activeWeapon;
 	Timer stunDelay = new Timer(500, this);
-	Timer attackActive = new Timer(250, this);
 
 //////////////////////////////////////////////////////////Setter Methods
 
@@ -31,12 +30,8 @@ abstract class Entity implements ActionListener {
 
 	void setupEffectTimers(){
 		stunDelay.setActionCommand("stun");
-		attackActive.setActionCommand("attack");
 	}
 
-	void startAttack(){
-		attackActive.start();
-	}
 //////////////////////////////////////////////////////////Getter Methods
 	int getX(){
 		return xPos;
@@ -86,6 +81,7 @@ abstract class Entity implements ActionListener {
 	Weapons getWeapon(){
 		return activeWeapon;
 	}
+	abstract Timer getAttackTimer();
 //////////////////////////////////////////////////////////////////////////Movement methods
 	void moveUp(){
 		if(yVelocity > -1 * defaultMovespeed && !stunned){
@@ -229,36 +225,16 @@ abstract class Entity implements ActionListener {
 	}
 ///////////////////////////////////////////////////////////////////////////////Combat methods
 	void attackUp(){
-		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(0);
-		attacksUp = true;
-		attacksDown = false;
-		attacksLeft = false;
-		attacksRight = false;
 	}
 	void attackDown(){
-		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(1);
-		attacksDown = true;
-		attacksUp = false;
-		attacksLeft = false;
-		attacksRight = false;
 	}
 	void attackLeft(){
-		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(2);
-		attacksLeft = true;
-		attacksDown = false;
-		attacksUp = false;
-		attacksRight = false;
 	}
 	void attackRight(){
-		activeWeapon.getHitboxes().moveHitbox(this, xPos - xOffset, yPos - yOffset);
 		attackHitbox = activeWeapon.getHitboxes().get(3);
-		attacksRight = true;
-		attacksDown = false;
-		attacksLeft = false;
-		attacksUp = false;
 	}
 
 	void loseHP(int lostHP){
@@ -330,14 +306,6 @@ abstract class Entity implements ActionListener {
 		if(e.getActionCommand().equals("stun")){
 			stunned = false;
 			stunDelay.stop();
-		}
-		if(e.getActionCommand().equals("attack")){
-			attacksUp = false;
-			attacksDown = false;
-			attacksLeft = false;
-			attacksRight = false;
-			sprite = library.get("idle");
-			attackActive.stop();
 		}
 	}
 

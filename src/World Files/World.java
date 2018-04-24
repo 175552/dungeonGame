@@ -4,6 +4,7 @@ public class World{
 	static int currentX = 0, currentY = 0;
 	static Cell[][] roomIDs = new Cell[worldLength][worldHeight];
 	static Room[][] rooms = new Room[xRoomCount][yRoomCount];
+	static Player p1 = new Player();
 
 	static void setup(){
 		rooms[xRoomCount/2][yRoomCount/2] = new StartingRoom();
