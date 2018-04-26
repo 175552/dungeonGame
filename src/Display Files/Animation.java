@@ -86,4 +86,27 @@ class Animation {
 	int getMaxTime(){
 		return maxTime;
 	}
+
+	BufferedImage getImage(int i){
+		return images[i];
+	}
+
+	int getTime(int i){
+		return times[i];
+	}
+
+	boolean equals(Animation a){
+		if(images.length != a.images.length)
+			return false;
+
+		for(int i = 0; i < times.length; i++){
+			if(!images[i].equals(a.getImage(i))){		//If the images aren't the same, return false
+				return false;
+			}
+			else if(times[i] != a.getTime(i)){
+				return false;
+			}
+		}
+		return true;
+	}
 }

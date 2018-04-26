@@ -1,0 +1,17 @@
+idle;../resources/lib/player/idle.txt
+cUp;../resources/lib/player/aR.txt
+cDown;../resources/lib/player/aR.txt
+cLeft;../resources/lib/player/aR.txt
+cRight;../resources/lib/player/aR.txt
+cmUp;../resources/lib/player/aR.txt
+cmDown;../resources/lib/player/aR.txt
+cmLeft;../resources/lib/player/aR.txt
+cmRight;../resources/lib/player/aR.txt
+aUp;../resources/lib/player/aU.txt
+aDown;../resources/lib/player/aU.txt
+aLeft;../resources/lib/player/aU.txt
+aRight;../resources/lib/player/aU.txt
+amUp;../resources/lib/player/aU.txt
+amDown;../resources/lib/player/aU.txt
+amLeft;../resources/lib/player/aU.txt
+amRight;../resources/lib/player/aU.txt

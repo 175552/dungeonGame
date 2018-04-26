@@ -5,7 +5,8 @@ import javax.swing.JPanel;
 class AnimationCollection {
 
 	Animation idle, moveUp, moveDown, moveLeft, moveRight, attackUp, attackDown, attackLeft, attackRight, attackAndMoveUp, attackAndMoveDown,
-	attackAndMoveLeft, attackAndMoveRight;
+	attackAndMoveLeft, attackAndMoveRight, chargeUp, chargeDown, chargeLeft, chargeRight, chargeAndMoveUp, chargeAndMoveDown,
+	chargeAndMoveLeft, chargeAndMoveRight;
 
 	Animation get(String name){
 		if(name.equals("idle")){
@@ -46,6 +47,30 @@ class AnimationCollection {
 		}
 		else if(name.equals("amRight")){
 			return attackAndMoveRight;
+		}
+		else if(name.equals("cUp")){
+			return chargeUp;
+		}
+		else if(name.equals("cDown")){
+			return chargeDown;
+		}
+		else if(name.equals("cLeft")){
+			return chargeLeft;
+		}
+		else if(name.equals("cRight")){
+			return chargeRight;
+		}
+		else if(name.equals("cmUp")){
+			return chargeAndMoveUp;
+		}
+		else if(name.equals("cmDown")){
+			return chargeAndMoveDown;
+		}
+		else if(name.equals("cmLeft")){
+			return chargeAndMoveLeft;
+		}
+		else if(name.equals("cmRight")){
+			return chargeAndMoveRight;
 		}
 		else{
 			System.out.println("AnimationCollection intake string error.");
@@ -92,6 +117,30 @@ class AnimationCollection {
 		}
 		else if(name.equals("amRight")){
 			attackAndMoveRight = new Animation(a);
+		}
+		else if(name.equals("cUp")){
+			chargeUp = new Animation(a);
+		}
+		else if(name.equals("cDown")){
+			chargeDown = new Animation(a);
+		}
+		else if(name.equals("cLeft")){
+			chargeLeft = new Animation(a);
+		}
+		else if(name.equals("cRight")){
+			chargeRight = new Animation(a);
+		}
+		else if(name.equals("cmUp")){
+			chargeAndMoveUp = new Animation(a);
+		}
+		else if(name.equals("cmDown")){
+			chargeAndMoveDown = new Animation(a);
+		}
+		else if(name.equals("cmLeft")){
+			chargeAndMoveLeft = new Animation(a);
+		}
+		else if(name.equals("cmRight")){
+			chargeAndMoveRight = new Animation(a);
 		}
 		else{
 			System.out.println("AnimationCollection intake string error.");

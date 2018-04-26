@@ -28,6 +28,14 @@ abstract class Entity implements ActionListener {
 
 	abstract void setAnimations();
 
+	void setAnimation(Animation a){
+		sprite = a;
+	}
+
+	void setIdle(){
+		setAnimation(library.get("idle"));
+	}
+
 	void setupEffectTimers(){
 		stunDelay.setActionCommand("stun");
 	}

@@ -5,10 +5,16 @@ abstract class Weapons extends Equipment {
 																//Direction indexes are [Up, Down, Left, Right]
 	int damage, knockback, attackTime, attackDuration;
 
+	double spdMod;												//Multiply current speed by spdMod when charging to get new speed.
+
 	int chargeTime, maxChargeTime;
 
 	WeaponHitboxes getHitboxes(){
 		return hb;
+	}
+
+	double getSpeedMod(){
+		return spdMod;
 	}
 
 	int getDamage(){
@@ -36,10 +42,7 @@ abstract class Weapons extends Equipment {
 	}
 
 	void chargeAttack(Entity e){
-		if(chargeTime != 0 && chargeTime != maxChargeTime && !e.attacking){
-			chargeTime = 0;
-		}
-		else if(chargeTime < maxChargeTime && e.attacking)
+		if(chargeTime < maxChargeTime)
 			chargeTime++;
 	}
 
@@ -49,15 +52,25 @@ abstract class Weapons extends Equipment {
 
 	void doAttack(Entity e){
 		getHitboxes().moveHitbox(e, e.getX() - e.getXOffset(), e.getY() - e.getYOffset());
-		if(e.attacksUp)
+		if(e.attacksUp){
 			e.attackUp();
-		else if(e.attacksDown)
+			if(e.library.get("aUp") != null)
+				e.sprite = e.library.get("aUp");
+		}
+		else if(e.attacksDown){
 			e.attackDown();
-		else if(e.attacksLeft)
+			if(e.library.get("aDown") != null)
+				e.sprite = e.library.get("aDown");
+		}
+		else if(e.attacksLeft){
 			e.attackLeft();
+			if(e.library.get("aLeft") != null)
+				e.sprite = e.library.get("aLeft");
+		}
 		else if(e.attacksRight){
 			e.attackRight();
-			e.sprite = e.library.get("aRight");
+			if(e.library.get("aRight") != null)
+				e.sprite = e.library.get("aRight");
 		}
 		e.attacking = false;
 	}

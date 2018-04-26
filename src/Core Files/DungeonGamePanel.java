@@ -87,28 +87,35 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			}
 		};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////Actions for attacking
-		upAS = new AbstractAction(){
+		upAS = new AbstractAction(){						//When the button is held...
 			public void actionPerformed(ActionEvent e){
-				arrUp = true;
-				if(!getPlayer().attacking)
+				if(!arrUp){
+					getPlayer().setAnimation(getPlayer().library.get("cUp"));
+				}
+				arrUp = true;								//Set the flag for the up arrow being pressed to true
+				if(!getPlayer().attacking)					//Set player attacking boolean to true
 					getPlayer().attacking = true;
 			}
 		};
-		upAE = new AbstractAction(){
+		upAE = new AbstractAction(){						//When the button is released...
 			public void actionPerformed(ActionEvent e){
-				if(getPlayer().getWeapon().attackReady()){
-					getPlayer().attacksUp = true;
+				if(getPlayer().getWeapon().attackReady() && (!arrLeft && !arrRight && !arrDown)){	//Is the player's attack ready?
+					getPlayer().attacksUp = true;			//If so, set the attack boolean for that direction to true, then attack
 					getPlayer().startAttack();
 				}
-				if(!arrLeft && !arrRight && !arrDown){
-					getPlayer().attacking = false;
+				if(!arrLeft && !arrRight && !arrDown){		//Is the only arrow key being pressed the selected arrow?
+					getPlayer().attacking = false;			//If so, set the attacking boolean to false and cancel the attacka
 					getPlayer().getWeapon().cancelAttack(getPlayer());
+					getPlayer().setIdle();
 				}
-				arrUp = false;
+				arrUp = false;								//Remove flag
 			}
 		};
 		downAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
+				if(!arrDown){
+					getPlayer().setAnimation(getPlayer().library.get("cDown"));
+				}
 				arrDown = true;
 				if(!getPlayer().attacking)
 					getPlayer().attacking = true;
@@ -116,19 +123,23 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		};
 		downAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				if(getPlayer().getWeapon().attackReady()){
+				if(getPlayer().getWeapon().attackReady() && (!arrLeft && !arrRight && !arrUp)){
 					getPlayer().attacksDown = true;
 					getPlayer().startAttack();
 				}
 				if(!arrLeft && !arrRight && !arrUp){
 					getPlayer().attacking = false;
 					getPlayer().getWeapon().cancelAttack(getPlayer());
+					getPlayer().setIdle();
 				}
 				arrDown = false;
 			}
 		};
 		leftAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
+				if(!arrLeft){
+					getPlayer().setAnimation(getPlayer().library.get("cLeft"));
+				}
 				arrLeft = true;
 				if(!getPlayer().attacking)
 					getPlayer().attacking = true;
@@ -136,19 +147,23 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		};
 		leftAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				if(getPlayer().getWeapon().attackReady()){
+				if(getPlayer().getWeapon().attackReady() && (!arrUp && !arrRight && !arrDown)){
 					getPlayer().attacksLeft = true;
 					getPlayer().startAttack();
 				}
 				if(!arrUp && !arrRight && !arrDown){
 					getPlayer().attacking = false;
 					getPlayer().getWeapon().cancelAttack(getPlayer());
+					getPlayer().setIdle();
 				}
 				arrLeft = false;
 			}
 		};
 		rightAS = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
+				if(!arrRight){
+					getPlayer().setAnimation(getPlayer().library.get("cRight"));
+				}
 				arrRight = true;
 				if(!getPlayer().attacking)
 					getPlayer().attacking = true;
@@ -156,13 +171,14 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		};
 		rightAE = new AbstractAction(){
 			public void actionPerformed(ActionEvent e){
-				if(getPlayer().getWeapon().attackReady()){
+				if(getPlayer().getWeapon().attackReady() && (!arrLeft && !arrUp && !arrDown)){
 					getPlayer().attacksRight = true;
 					getPlayer().startAttack();
 				}
 				if(!arrLeft && !arrUp && !arrDown){
 					getPlayer().attacking = false;
 					getPlayer().getWeapon().cancelAttack(getPlayer());
+					getPlayer().setIdle();
 				}
 				arrRight = false;
 			}

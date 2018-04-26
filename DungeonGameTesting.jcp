@@ -51,6 +51,15 @@
 				<path>src\Equipment Files\Weapons\Daggers</path>
 			</folderitem>
 			<folderitem>
+				<path>src\Equipment Files\Weapons\Daggers\Core Files</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Daggers\Dagger Types</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Core Files</path>
+			</folderitem>
+			<folderitem>
 				<path>src\Core Files</path>
 			</folderitem>
 			<fileitem>
@@ -98,28 +107,28 @@
 				<folder>src\Equipment Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons\WeaponHitboxes.java</path>
-				<folder>src\Equipment Files\Weapons</folder>
+				<path>src\Equipment Files\Weapons\Daggers\Core Files\DaggerHitboxes.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers\Core Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons\Weapons.java</path>
-				<folder>src\Equipment Files\Weapons</folder>
+				<path>src\Equipment Files\Weapons\Daggers\Core Files\Daggers.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers\Core Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons\Daggers\BasicDagger.java</path>
-				<folder>src\Equipment Files\Weapons\Daggers</folder>
+				<path>src\Equipment Files\Weapons\Daggers\Dagger Types\BasicDagger.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers\Dagger Types</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons\Daggers\BrokenDagger.java</path>
-				<folder>src\Equipment Files\Weapons\Daggers</folder>
+				<path>src\Equipment Files\Weapons\Daggers\Dagger Types\BrokenDagger.java</path>
+				<folder>src\Equipment Files\Weapons\Daggers\Dagger Types</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons\Daggers\DaggerHitboxes.java</path>
-				<folder>src\Equipment Files\Weapons\Daggers</folder>
+				<path>src\Equipment Files\Weapons\Core Files\WeaponHitboxes.java</path>
+				<folder>src\Equipment Files\Weapons\Core Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons\Daggers\Daggers.java</path>
-				<folder>src\Equipment Files\Weapons\Daggers</folder>
+				<path>src\Equipment Files\Weapons\Core Files\Weapons.java</path>
+				<folder>src\Equipment Files\Weapons\Core Files</folder>
 			</fileitem>
 			<fileitem>
 				<path>src\Core Files\DungeonGamePanel.java</path>

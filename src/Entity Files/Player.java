@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.Timer;
 import java.io.*;
+import java.util.Scanner;
 
 public class Player extends Entity{
 
@@ -39,8 +40,11 @@ public class Player extends Entity{
 
 	void setAnimations(){
 		try{;
-			library.assignAnim("idle", new Animation(new File("../resources/lib/player/idle.txt")));
-			library.assignAnim("aRight", new Animation(new File("../resources/lib/player/aR.txt")));
+			Scanner input = new Scanner(new File("../resources/lib/player/player.txt"));
+			while(input.hasNextLine()){
+				String[] temp = input.nextLine().split(";");
+				library.assignAnim(temp[0], new Animation(new File(temp[1])));
+			}
 		}catch(Exception e){System.out.println("Player image file error");}
 	}
 
@@ -60,7 +64,6 @@ public class Player extends Entity{
 			attacksDown = false;
 			attacksLeft = false;
 			attacksRight = false;
-			activeWeapon.cancelAttack(this);
 			sprite = library.get("idle");
 			attackActive.stop();
 		}
