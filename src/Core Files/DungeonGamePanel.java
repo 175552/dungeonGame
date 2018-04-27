@@ -104,7 +104,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 					getPlayer().startAttack();
 				}
 				if(!arrLeft && !arrRight && !arrDown){		//Is the only arrow key being pressed the selected arrow?
-					getPlayer().attacking = false;			//If so, set the attacking boolean to false and cancel the attacka
+					getPlayer().attacking = false;			//If so, set the attacking boolean to false and cancel the attack
 					getPlayer().getWeapon().cancelAttack(getPlayer());
 					getPlayer().setIdle();
 				}
