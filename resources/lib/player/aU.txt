@@ -1,1 +1,1 @@
-../resources/textures/yellowSquare.png;1
+../resources/textures/blueSquare.png;1

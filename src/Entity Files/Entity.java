@@ -40,6 +40,18 @@ abstract class Entity implements ActionListener {
 		stunDelay.setActionCommand("stun");
 	}
 
+	void effectHandler(){
+		if(activeWeapon.attackReady() && attacking){
+			if(attacksUp)
+				setAnimation(library.get("cmUp"));
+			else if(attacksDown)
+				setAnimation(library.get("cmDown"));
+			else if(attacksLeft)
+				setAnimation(library.get("cmLeft"));
+			else setAnimation(library.get("cmRight"));
+		}
+	}
+
 //////////////////////////////////////////////////////////Getter Methods
 	int getX(){
 		return xPos;
@@ -150,6 +162,11 @@ abstract class Entity implements ActionListener {
 		if(!stunned){
 			inertiaX();		//////////Checks if entity is not actively moving in a direction, and if so, slows the player.
 			inertiaY();
+		}
+
+		if(attacking){
+			xVelocity = (int)(xVelocity * activeWeapon.getSpeedMod());
+			yVelocity = (int)(yVelocity * activeWeapon.getSpeedMod());
 		}
 
 		xPos += xVelocity;

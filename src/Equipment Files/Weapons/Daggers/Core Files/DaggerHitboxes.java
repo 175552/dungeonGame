@@ -10,7 +10,7 @@ public class DaggerHitboxes extends WeaponHitboxes {
 		this.offset = offset;
 		this.par = par;
 		this.perp = perp;
-		range = (int)(par + offset);
+		range = (int)((par/2.0) + offset);
 	}
 
 	void moveHitbox(Entity e, int x, int y){			//Recreates Area at player location for each attack

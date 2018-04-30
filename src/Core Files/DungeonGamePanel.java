@@ -313,6 +313,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		if(!getPlayer().attacksUp && !getPlayer().attacksDown && !getPlayer().attacksLeft && !getPlayer().attacksRight){
 			getPlayer().attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 		}
+
+		getPlayer().effectHandler();					//Handles any passive effects to the player that aren't caused by direct inputs.
+
 		repaint();
 		if(getPlayer().getHP() < 0){
 			updater.stop();

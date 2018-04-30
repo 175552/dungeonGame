@@ -5,7 +5,7 @@ class Daggers extends Weapons {
 		attackTime = 250;
 		attackDuration = 100;
 		maxChargeTime = (attackTime*World.framerate)/1000;
-		spdMod = 1;
+		spdMod = 0.7;
 	}
 
 }

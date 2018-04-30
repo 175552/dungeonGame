@@ -12,12 +12,11 @@ public class Enemies extends Entity{
 	boolean playerUp, playerDown, playerLeft, playerRight, aggroed = true, hesitate;
 	boolean[] lastPlayerPos = new boolean[]{false, false, false, false};
 
-	int aggroRange = 250, holdAggroRange = 400, currentTime = 0, maxTime;
+	int aggroRange = 250, holdAggroRange = 400, currentTime = 0, maxTime, waitTime = 1000;
 
-	Timer hesitationDelay = new Timer(500, this), eAtkTimer = new Timer(1000/World.framerate, this);
+	Timer hesitationDelay = new Timer(500, this), eAtkTimer = new Timer(1000/World.framerate, this), wait = new Timer(waitTime, this);
 
 	Enemies(int x, int y){
-
 		try{
 			BufferedImage[] tempImages = new BufferedImage[]{ImageIO.read(new File("../resources/textures/yellowSquare.png"))};
 
@@ -125,18 +124,37 @@ public class Enemies extends Entity{
 				attacking = false;
 				activeWeapon.cancelAttack(this);
 			}
-			if(!eAtkTimer.isRunning()){						//If the enemy is not currently attacking...
+			if(!eAtkTimer.isRunning() && !wait.isRunning()){	//If the enemy is not currently attacking and the enemy isn't waiting...
 				if(activeWeapon.attackReady()){		//If it's attack is ready, begin to attack
 					attackHitbox.reset();
 					eAtkTimer.start();
 				}
-				else if(getEntityDis(p) <= (int)(2 * activeWeapon.getRange())){//If it's not ready, then continue to
-																				 //charge if p is in range
+				else if(getEntityDis(p) <=
+						activeWeapon.getRange() + p.getXOffset() + Math.abs(xVelocity * activeWeapon.getSpeedMod() *
+							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){
+																					//If it's not ready, then continue to
+																				 	//charge if enemy can reach p while chargin it
 					attacking = true;
 					activeWeapon.chargeAttack(this);
 				}
-				else if(getEntityDis(p) > (int)(2 * activeWeapon.getRange())){//If it's not ready and p is not in range,
-																				//cancel the attack
+				else if(getEntityDis(p) <=
+						activeWeapon.getRange() + p.getYOffset() + Math.abs(yVelocity * activeWeapon.getSpeedMod() *
+							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){
+
+					attacking = true;
+					activeWeapon.chargeAttack(this);
+				}
+				else if(getEntityDis(p) >
+						activeWeapon.getRange() + p.getXOffset() + Math.abs(xVelocity * activeWeapon.getSpeedMod() *
+							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){//If it's not ready and p is not in range,
+																					//cancel the attack
+					attacking = false;
+					attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
+					activeWeapon.cancelAttack(this);
+				}
+				else if(getEntityDis(p) >
+						activeWeapon.getRange() + p.getYOffset() + Math.abs(yVelocity * activeWeapon.getSpeedMod() *
+							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){
 					attacking = false;
 					attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 					activeWeapon.cancelAttack(this);
@@ -164,6 +182,7 @@ public class Enemies extends Entity{
 		super.setupEffectTimers();
 		hesitationDelay.setActionCommand("hesitate");
 		eAtkTimer.setActionCommand("attack");
+		wait.setActionCommand("wait");
 	}
 
 	Timer getAttackTimer(){
@@ -187,7 +206,11 @@ public class Enemies extends Entity{
 				attacksRight = false;
 				sprite = library.get("idle");
 				eAtkTimer.stop();
+				wait.start();
 			}
+		}
+		if(e.getActionCommand().equals("wait")){
+			wait.stop();
 		}
 	}
 }
