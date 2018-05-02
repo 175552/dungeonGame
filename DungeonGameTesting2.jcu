@@ -48,10 +48,10 @@
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\Core Files\DungeonGamePanel.java</path>
+			<path>src\Equipment Files\Weapons\Daggers\Core Files\DaggerHitboxes.java</path>
 			<source>true</source>
 			<index>0</index>
-			<active>true</active>
+			<active>false</active>
 		</docitem>
 		<docitem>
 			<path>src\Entity Files\Entity.java</path>
@@ -60,34 +60,10 @@
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Equipment Files\Weapons\Core Files\Weapons.java</path>
+			<path>src\Core Files\DungeonGamePanel.java</path>
 			<source>true</source>
 			<index>2</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Equipment Files\Weapons\Daggers\Core Files\Daggers.java</path>
-			<source>true</source>
-			<index>3</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Entity Files\Enemies.java</path>
-			<source>true</source>
-			<index>4</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Equipment Files\Weapons\Core Files\WeaponHitboxes.java</path>
-			<source>true</source>
-			<index>5</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>src\Equipment Files\Weapons\Daggers\Core Files\DaggerHitboxes.java</path>
-			<source>true</source>
-			<index>6</index>
-			<active>false</active>
+			<active>true</active>
 		</docitem>
 	</open_files>
 </workspace_user>

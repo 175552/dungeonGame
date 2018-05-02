@@ -9,7 +9,7 @@ import java.awt.*;
 abstract class Entity implements ActionListener {
 	int xPos, yPos, defaultMovespeed, acceleration, xVelocity, yVelocity, xOffset, yOffset;			//Position and movement information
 
-	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF;								//Stat info
+	int HP = 1000, HPMax = 1000, baseATK, baseATKSPD, baseDEF, ATK, ATKSPD, DEF;								//Stat info
 
 	boolean attacksUp, attacksDown, attacksLeft, attacksRight, xMove, yMove;
 
@@ -22,11 +22,17 @@ abstract class Entity implements ActionListener {
 	Area attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 
 	Weapons activeWeapon;
+	ArrayList<Equipment> inventory = new ArrayList<Equipment>();
+
 	Timer stunDelay = new Timer(500, this);
 
 //////////////////////////////////////////////////////////Setter Methods
 
 	abstract void setAnimations();
+
+	void createStartInventory(){
+		inventory.add(activeWeapon);
+	}
 
 	void setAnimation(Animation a){
 		sprite = a;
@@ -38,6 +44,13 @@ abstract class Entity implements ActionListener {
 
 	void setupEffectTimers(){
 		stunDelay.setActionCommand("stun");
+	}
+
+	void calcATK(){
+		ATK = baseATK;
+		for(int i = 0; i < inventory.size(); i++){
+			ATK += inventory.get(i).getATK();
+		}
 	}
 
 	void effectHandler(){

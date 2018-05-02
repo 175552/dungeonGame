@@ -125,36 +125,32 @@ public class Enemies extends Entity{
 				activeWeapon.cancelAttack(this);
 			}
 			if(!eAtkTimer.isRunning() && !wait.isRunning()){	//If the enemy is not currently attacking and the enemy isn't waiting...
+
+				int attackRangeX = activeWeapon.getRange() + p.getXOffset() + (int)Math.abs(xVelocity * activeWeapon.getSpeedMod() *
+							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0));
+				int attackRangeY = activeWeapon.getRange() + p.getYOffset() + (int)Math.abs(yVelocity * activeWeapon.getSpeedMod() *
+							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0));
+
 				if(activeWeapon.attackReady()){		//If it's attack is ready, begin to attack
 					attackHitbox.reset();
 					eAtkTimer.start();
 				}
-				else if(getEntityDis(p) <=
-						activeWeapon.getRange() + p.getXOffset() + Math.abs(xVelocity * activeWeapon.getSpeedMod() *
-							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){
-																					//If it's not ready, then continue to
-																				 	//charge if enemy can reach p while chargin it
-					attacking = true;
-					activeWeapon.chargeAttack(this);
+				else if(getEntityDis(p) <= attackRangeX){
+					attacking = true;						//If it's not ready, then continue to
+					activeWeapon.chargeAttack(this);		//charge if enemy can reach p while charging it
 				}
-				else if(getEntityDis(p) <=
-						activeWeapon.getRange() + p.getYOffset() + Math.abs(yVelocity * activeWeapon.getSpeedMod() *
-							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){
+				else if(getEntityDis(p) <= attackRangeY){
 
 					attacking = true;
 					activeWeapon.chargeAttack(this);
 				}
-				else if(getEntityDis(p) >
-						activeWeapon.getRange() + p.getXOffset() + Math.abs(xVelocity * activeWeapon.getSpeedMod() *
-							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){//If it's not ready and p is not in range,
+				else if(getEntityDis(p) > attackRangeX){//If it's not ready and p is not in range,
 																					//cancel the attack
 					attacking = false;
 					attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 					activeWeapon.cancelAttack(this);
 				}
-				else if(getEntityDis(p) >
-						activeWeapon.getRange() + p.getYOffset() + Math.abs(yVelocity * activeWeapon.getSpeedMod() *
-							(int)(World.framerate * activeWeapon.getAttackTime()/1000.0))){
+				else if(getEntityDis(p) > attackRangeY){
 					attacking = false;
 					attackHitbox = new Area(new Rectangle2D.Double(0, 0, 0, 0));
 					activeWeapon.cancelAttack(this);
