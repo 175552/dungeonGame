@@ -1,0 +1,3 @@
+class BluntWeapons extends Weapons{
+
+}

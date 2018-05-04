@@ -9,6 +9,8 @@ abstract class Weapons extends Equipment {
 
 	int chargeTime, maxChargeTime;
 
+	boolean canAttackWhileMoving;
+
 	WeaponHitboxes getHitboxes(){
 		return hb;
 	}

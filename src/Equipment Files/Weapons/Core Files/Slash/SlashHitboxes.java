@@ -1,12 +1,12 @@
 import java.awt.geom.*;
 import java.awt.*;
 
-public class DaggerHitboxes extends WeaponHitboxes {
+public class SlashHitboxes extends WeaponHitboxes {
 
 	double offset, par, perp;						//offset = offset of circles to create arc.
 													//par = diameter of ellipse along the parallel to the direction the player is aiming
 													//perp = diameter of ellipse along the perpendicular to the direction the player is aiming
-	DaggerHitboxes(double offset, double par, double perp){
+	SlashHitboxes(double offset, double par, double perp){
 		this.offset = offset;
 		this.par = par;
 		this.perp = perp;

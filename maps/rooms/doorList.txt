@@ -1,0 +1,2 @@
+../maps/rooms/startRoom.txt;t,t,t,t
+../maps/rooms/map.txt;f,f,t,f

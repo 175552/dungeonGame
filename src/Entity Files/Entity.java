@@ -46,6 +46,14 @@ abstract class Entity implements ActionListener {
 		stunDelay.setActionCommand("stun");
 	}
 
+	void setX(int x){
+		xPos = x;
+	}
+
+	void setY(int y){
+		yPos = y;
+	}
+
 	void calcATK(){
 		ATK = baseATK;
 		for(int i = 0; i < inventory.size(); i++){

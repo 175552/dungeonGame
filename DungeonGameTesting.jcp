@@ -33,7 +33,7 @@
 				<path>src\World Files</path>
 			</folderitem>
 			<folderitem>
-				<path>src\World Files\Rooms</path>
+				<path>src\World Files\Core Files</path>
 			</folderitem>
 			<folderitem>
 				<path>src\Entity Files</path>
@@ -60,27 +60,37 @@
 				<path>src\Equipment Files\Weapons\Core Files</path>
 			</folderitem>
 			<folderitem>
+				<path>src\Equipment Files\Weapons\Core Files\Slash</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Core Files\Blunt</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Swords</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Swords\Core Files</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Swords\Sword Types</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Hammers</path>
+			</folderitem>
+			<folderitem>
 				<path>src\Core Files</path>
 			</folderitem>
 			<fileitem>
-				<path>src\World Files\Cell.java</path>
-				<folder>src\World Files</folder>
+				<path>src\World Files\Core Files\Cell.java</path>
+				<folder>src\World Files\Core Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\World Files\CreatorPanel.java</path>
-				<folder>src\World Files</folder>
+				<path>src\World Files\Core Files\Room.java</path>
+				<folder>src\World Files\Core Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\World Files\Room.java</path>
-				<folder>src\World Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\World Files\World.java</path>
-				<folder>src\World Files</folder>
-			</fileitem>
-			<fileitem>
-				<path>src\World Files\Rooms\StartingRoom.java</path>
-				<folder>src\World Files\Rooms</folder>
+				<path>src\World Files\Core Files\World.java</path>
+				<folder>src\World Files\Core Files</folder>
 			</fileitem>
 			<fileitem>
 				<path>src\Entity Files\Enemies.java</path>
@@ -107,10 +117,6 @@
 				<folder>src\Equipment Files</folder>
 			</fileitem>
 			<fileitem>
-				<path>src\Equipment Files\Weapons\Daggers\Core Files\DaggerHitboxes.java</path>
-				<folder>src\Equipment Files\Weapons\Daggers\Core Files</folder>
-			</fileitem>
-			<fileitem>
 				<path>src\Equipment Files\Weapons\Daggers\Core Files\Daggers.java</path>
 				<folder>src\Equipment Files\Weapons\Daggers\Core Files</folder>
 			</fileitem>
@@ -129,6 +135,26 @@
 			<fileitem>
 				<path>src\Equipment Files\Weapons\Core Files\Weapons.java</path>
 				<folder>src\Equipment Files\Weapons\Core Files</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Core Files\Slash\SlashHitboxes.java</path>
+				<folder>src\Equipment Files\Weapons\Core Files\Slash</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Core Files\Blunt\BluntWeapons.java</path>
+				<folder>src\Equipment Files\Weapons\Core Files\Blunt</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Swords\Core Files\Sword.java</path>
+				<folder>src\Equipment Files\Weapons\Swords\Core Files</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Equipment Files\Weapons\Swords\Sword Types\BasicSword.java</path>
+				<folder>src\Equipment Files\Weapons\Swords\Sword Types</folder>
+			</fileitem>
+			<fileitem>
+				<path>src\Core Files\CreatorPanel.java</path>
+				<folder>src\Core Files</folder>
 			</fileitem>
 			<fileitem>
 				<path>src\Core Files\DungeonGamePanel.java</path>

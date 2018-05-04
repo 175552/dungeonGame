@@ -14,7 +14,7 @@ public class Enemies extends Entity{
 
 	int aggroRange = 250, holdAggroRange = 400, currentTime = 0, maxTime, waitTime = 1000;
 
-	Timer hesitationDelay = new Timer(500, this), eAtkTimer = new Timer(1000/World.framerate, this), wait = new Timer(waitTime, this);
+	Timer hesitationDelay = new Timer(750, this), eAtkTimer = new Timer(1000/World.framerate, this), wait = new Timer(waitTime, this);
 
 	Enemies(int x, int y){
 		try{
@@ -26,7 +26,7 @@ public class Enemies extends Entity{
 			library.assignAnim("idle", sprite);
 			library.assignAnim("aRight", sprite);
 		}catch(IOException e){System.out.println("Enemy sprite not found.");}
-		defaultMovespeed = 3;
+		defaultMovespeed = 4;
 		acceleration = 2;
 		xPos = x;
 		yPos = y;
@@ -187,14 +187,17 @@ public class Enemies extends Entity{
 
 	public void actionPerformed(ActionEvent e){
 		super.actionPerformed(e);
-		if(e.getActionCommand().equals("hesitate"))
+		if(e.getActionCommand().equals("hesitate")){
 			hesitate = false;
+			hesitationDelay.stop();
+		}
 		if(e.getActionCommand().equals("attack")){
 			targetPlayer(World.p1);
 			activeWeapon.doAttack(this);
 			currentTime++;
 			if(currentTime == maxTime){
 				activeWeapon.cancelAttack(this);
+				attackHitbox.reset();
 				currentTime = 0;
 				attacksUp = false;
 				attacksDown = false;

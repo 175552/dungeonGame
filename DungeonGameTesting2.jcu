@@ -15,7 +15,7 @@
 				<path>src\World Files</path>
 			</folderitem>
 			<folderitem>
-				<path>src\World Files\Rooms</path>
+				<path>src\World Files\Core Files</path>
 			</folderitem>
 			<folderitem>
 				<path>src\Entity Files</path>
@@ -42,27 +42,57 @@
 				<path>src\Equipment Files\Weapons\Core Files</path>
 			</folderitem>
 			<folderitem>
+				<path>src\Equipment Files\Weapons\Core Files\Slash</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Core Files\Blunt</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Swords</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Swords\Core Files</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Swords\Sword Types</path>
+			</folderitem>
+			<folderitem>
+				<path>src\Equipment Files\Weapons\Hammers</path>
+			</folderitem>
+			<folderitem>
 				<path>src\Core Files</path>
 			</folderitem>
 		</project>
 	</projects>
 	<open_files>
 		<docitem>
-			<path>src\Equipment Files\Weapons\Daggers\Core Files\DaggerHitboxes.java</path>
+			<path>src\Core Files\DungeonGamePanel.java</path>
 			<source>true</source>
 			<index>0</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Entity Files\Entity.java</path>
+			<path>src\World Files\Core Files\Room.java</path>
 			<source>true</source>
 			<index>1</index>
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>src\Core Files\DungeonGamePanel.java</path>
+			<path>src\World Files\Core Files\World.java</path>
 			<source>true</source>
 			<index>2</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>src\World Files\Core Files\Cell.java</path>
+			<source>true</source>
+			<index>3</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>src\Entity Files\Player.java</path>
+			<source>true</source>
+			<index>4</index>
 			<active>true</active>
 		</docitem>
 	</open_files>

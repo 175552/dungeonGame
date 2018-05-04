@@ -1,0 +1,5 @@
+3;1
+2
+a=../maps/rooms/startRoom.txt
+b=../maps/rooms/map.txt
+a a b

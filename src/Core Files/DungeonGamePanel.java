@@ -34,16 +34,16 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 	Set<String> keysList = new HashSet<String>();
 
-	ArrayList<Enemies> enemyList = new ArrayList<Enemies>();
-
 	DungeonGamePanel(){
 		createPanel();
-		Cell.idToAnimationMap();					//Creates hashmap assigning animations to cells
-		World.setup();								//Sets player in room in middle of world
-		drawWorld();								//Draws the world image once, to prevent lag
-		generateEnemies();							//Creates enemies at positions on map
+		Cell.idToAnimationMap();												//Creates hashmap assigning animations to cells
+		World.createRoomList();													//Creates a hashmap that handles which rooms have which doors
+		World.createWorld(new File("../maps/worlds/worldTest.txt"));			//Creates the world of rooms from a file
+		World.setup();															//Sets player in room in middle of world
+		setupCurrentRoom();														//Creates the array of cells
+		generateEnemies();														//Creates enemies at positions on map
 
-		updater.start();							//Starts the actual timer for redrawing and taking in inputs
+		updater.start();												//Starts the actual timer for redrawing and taking in inputs
 
 ////////////////////////////////////////////////////////////////////////////////////////////Create actions for movement
 		upStart = new AbstractAction(){
@@ -277,30 +277,54 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			if((getPlayer().getX() + getPlayer().getXOffset()) % World.cellSize != 0)
 				getPlayer().moveRightDis(World.cellSize - ((getPlayer().getX() + getPlayer().getXOffset()) % World.cellSize));
 		}
+///////////////////////////////////////////////////////////////////////////////////////////Room changing commands
+
+		if(getPlayer().getYVelocity() < 0 &&
+				Math.abs(getPlayer().getYVelocity()) >= getPlayer().getY() - getPlayer().getYOffset() && World.getCurrentRoom().checkUp() && World.checkUp()){
+			World.exitUp();
+		}
+
+		else if(getPlayer().getYVelocity() + getPlayer().getY() + getPlayer().getYOffset() > (World.worldHeight*World.cellSize) &&
+					World.getCurrentRoom().checkDown() && World.checkDown()){
+			World.exitDown();
+		}
+
+		else if(getPlayer().getXVelocity() < 0 &&
+					Math.abs(getPlayer().getXVelocity()) >= getPlayer().getX() - getPlayer().getXOffset() &&
+						World.getCurrentRoom().checkLeft() && World.checkLeft()){
+			World.exitLeft();
+		}
+
+		else if(getPlayer().getXVelocity() + getPlayer().getX() + getPlayer().getXOffset() > (World.worldLength*World.cellSize) &&
+					World.getCurrentRoom().checkRight() && World.checkRight()){
+			World.exitRight();
+		}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////Enemy commands
-		for(int i = 0; i < enemyList.size(); i++){ //Iterates through every enemy on screen
-			enemyList.get(i).checkCurrentPos(getPlayer());
-			int[] bounds = enemyList.get(i).getBounds();	//Gets hitbox of enemy
+		for(int i = 0; i < getCurrentEnemies().size(); i++){ //Iterates through every enemy on screen
+			getCurrentEnemies().get(i).checkCurrentPos(getPlayer());
+			int[] bounds = getCurrentEnemies().get(i).getBounds();	//Gets hitbox of enemy
 			int[] pBounds = getPlayer().getBounds();					//Player hitbox
 
 			/////////////Methods to be run when enemy is hit
 			if(getPlayer().getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
-				enemyList.get(i).loseHP(getPlayer().getWeapon().getDamage());	//Do damage to hit enemy
-				enemyList.get(i).hit(getPlayer());
+				getCurrentEnemies().get(i).loseHP(getPlayer().getWeapon().getDamage());	//Do damage to hit enemy
+				getCurrentEnemies().get(i).hit(getPlayer());
 			}
 
-			enemyList.get(i).chasePlayer(getPlayer());	//Have enemy chase the player
+			getCurrentEnemies().get(i).chasePlayer(getPlayer());	//Have enemy chase the player
 
-			if(enemyList.get(i).isEntityInRange(getPlayer())){
+			if(getCurrentEnemies().get(i).isEntityInRange(getPlayer())){
 				////////////////////Methods to run when player is hit
-				if(enemyList.get(i).getAttackHitbox().intersects(pBounds[0] - pBounds[2],
+				if(getCurrentEnemies().get(i).getAttackHitbox().intersects(pBounds[0] - pBounds[2],
 					pBounds[1] - pBounds[3], pBounds[2] * 2, pBounds[3] * 2)){
-					getPlayer().loseHP(enemyList.get(i).getWeapon().getDamage());
-					getPlayer().hit(enemyList.get(i));
+					getPlayer().loseHP(getCurrentEnemies().get(i).getWeapon().getDamage());
+					getPlayer().hit(getCurrentEnemies().get(i));
 				}
 			}
-			if(enemyList.get(i).getHP() <= 0){	//If an enemy dies, remove it from the arraylist
-				enemyList.remove(i);
+			if(getCurrentEnemies().get(i).getHP() <= 0){	//If an enemy dies, remove it from the arraylist
+				getCurrentEnemies().remove(i);
 			}
 		}
 /////////////////////////////////////////////////////////////////////////////////////////Combat
@@ -328,7 +352,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 		for(int a = 0; a < World.worldHeight; a++){
 			for(int i = 0; i < World.worldLength; i++){
 				if(World.roomIDs[i][a].spawnCheck()){
-					enemyList.add(new Enemies(i*World.cellSize + (World.cellSize/2), a*World.cellSize + (World.cellSize/2)));
+					getCurrentEnemies().add(new Enemies(i*World.cellSize + (World.cellSize/2), a*World.cellSize + (World.cellSize/2)));
 				}
 			}
 		}
@@ -351,9 +375,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			if(getPlayer().checkIfHit()){
 				getPlayer().showHPBar(g);
 			}
-			for(int i = 0; i < enemyList.size(); i++){
-				Enemies e = enemyList.get(i);
-				if(enemyList.get(i).checkIfHit()){
+			for(int i = 0; i < getCurrentEnemies().size(); i++){
+				Enemies e = getCurrentEnemies().get(i);
+				if(getCurrentEnemies().get(i).checkIfHit()){
 					e.showHPBar(g);
 				}
 				if(e.getAttackTimer().isRunning()){
@@ -367,22 +391,19 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	}
 
 
+	private ArrayList<Enemies> getCurrentEnemies(){
+		return World.getCurrentRoom().enemyList;
+	}
 
 
-	private void drawWorld(){
-		worldImage = new BufferedImage(World.cellSize * World.worldLength,
-		World.cellSize * World.worldHeight, BufferedImage.TYPE_INT_ARGB);
-
-		Graphics2D g2 = worldImage.createGraphics();
-		int store = World.cellSize;
+	private void setupCurrentRoom(){
 		System.out.println(World.xRoomCount/2 + ", " + World.currentY);
 		try{
 			Scanner input = new Scanner(new File(World.rooms[World.currentX][World.currentY].getFilePath()));
-			for(int a = 0; a < World.worldHeight; a++){					//Draw images from the map buttons into a larger image.
+			for(int a = 0; a < World.worldHeight; a++){
 				for(int i = 0; i < World.worldLength; i++){
 					try{
 						int temp = input.nextInt();
-						g2.drawImage(Cell.idToTexture.get(temp), i*store, a*store, null);
 						World.roomIDs[i][a] = new Cell(temp);
 					}catch(Exception e){System.out.println("World draw error: " + e);}
 				}
@@ -398,8 +419,8 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 
 	private void drawEnemies(Graphics g){								//Encapsulated method for drawing the enemise
-		for(int i = 0; i < enemyList.size(); i++){
-			Enemies temp = enemyList.get(i);
+		for(int i = 0; i < getCurrentEnemies().size(); i++){
+			Enemies temp = getCurrentEnemies().get(i);
 			temp.getAnimation().drawAnimation(g, temp.getX() - temp.getXOffset(), temp.getY() - temp.getYOffset(), 50, 50, this);
 		}
 	}

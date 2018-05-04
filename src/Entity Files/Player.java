@@ -10,17 +10,19 @@ public class Player extends Entity{
 
 	boolean movesUp, movesDown, movesLeft, movesRight;
 
-	Timer attackActive = new Timer(100, this);
+	Timer attackActive;
 
 	Player(){
-		xPos = 25;
-		yPos = 400;
+		xPos = (World.worldLength*World.cellSize)/2;
+		yPos = (World.worldHeight*World.cellSize)/2;
 		xOffset = 25;
 		yOffset = 25;
-		defaultMovespeed = 8;
+		defaultMovespeed = 6;
 		acceleration = 4;
 
-		activeWeapon = new BasicDagger();
+		activeWeapon = new BasicSword();
+
+		attackActive = new Timer(activeWeapon.getAttackDuration(), this);
 
 		setAnimations();
 		sprite = library.get("idle");
@@ -36,6 +38,11 @@ public class Player extends Entity{
 		g.setColor(Color.black);
 		g.setFont(new Font("Serif", Font.BOLD, fontSize));
 		g.drawString("YOU DIED", (World.worldLength * World.cellSize)/2 - fontSize, (World.worldHeight * World.cellSize)/2 - fontSize);
+	}
+
+	void move(){
+		if(!attackActive.isRunning() && !activeWeapon.canAttackWhileMoving)
+			super.move();
 	}
 
 	void setAnimations(){
