@@ -174,7 +174,7 @@ abstract class Entity implements ActionListener {
 	}
 //////////////////////////////////////////////////////////////////////////////Velocity movement methods
 	void move(){
-		if((getYVelocity() < 0 && !checkUp()) || (getYVelocity() > 0 && !checkDown()))
+		if((getYVelocity() < 0 && !checkUp() || (getYVelocity() > 0 && !checkDown())))
 			stopY();
 
 		if((getXVelocity() < 0 && !checkLeft()) || (getXVelocity() > 0 && !checkRight()))
@@ -226,8 +226,8 @@ abstract class Entity implements ActionListener {
 			if(yPos - yOffset + yVelocity < 0)
 				return false;
 
-			if(World.roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos - yOffset + yVelocity)/World.cellSize].moveCheck() &&
-				World.roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos - yOffset + yVelocity)/World.cellSize].moveCheck())
+			if(World.getCurrentRoom().roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos - yOffset + yVelocity)/World.cellSize].moveCheck() &&
+				World.getCurrentRoom().roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos - yOffset + yVelocity)/World.cellSize].moveCheck())
 					return true;
 
 			else return false;
@@ -238,8 +238,8 @@ abstract class Entity implements ActionListener {
 			if(yPos + yOffset + yVelocity > World.cellSize * World.worldHeight)
 				return false;
 
-			if(World.roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos + yOffset + yVelocity)/World.cellSize].moveCheck() &&
-				World.roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos + yOffset + yVelocity)/World.cellSize].moveCheck())
+			if(World.getCurrentRoom().roomIDs[(xPos - xOffset + 1)/World.cellSize][(yPos + yOffset + yVelocity)/World.cellSize].moveCheck() &&
+				World.getCurrentRoom().roomIDs[(xPos + xOffset - 1)/World.cellSize][(yPos + yOffset + yVelocity)/World.cellSize].moveCheck())
 					return true;
 
 			else return false;
@@ -250,8 +250,8 @@ abstract class Entity implements ActionListener {
 			if(xPos - xOffset + xVelocity < 0)
 				return false;
 
-			if(World.roomIDs[(xPos - xOffset + xVelocity)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
-				World.roomIDs[(xPos - xOffset + xVelocity)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
+			if(World.getCurrentRoom().roomIDs[(xPos - xOffset + xVelocity)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
+				World.getCurrentRoom().roomIDs[(xPos - xOffset + xVelocity)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
 				return true;
 
 			else return false;
@@ -262,8 +262,8 @@ abstract class Entity implements ActionListener {
 			if(xPos + xOffset  + xVelocity > World.cellSize * World.worldLength)
 				return false;
 
-			if(World.roomIDs[(xPos + xOffset  + xVelocity)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
-				World.roomIDs[(xPos + xOffset  + xVelocity)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
+			if(World.getCurrentRoom().roomIDs[(xPos + xOffset  + xVelocity)/World.cellSize][(yPos - yOffset + 1)/World.cellSize].moveCheck() &&
+				World.getCurrentRoom().roomIDs[(xPos + xOffset  + xVelocity)/World.cellSize][(yPos + yOffset - 1)/World.cellSize].moveCheck())
 				return true;
 
 			else return false;

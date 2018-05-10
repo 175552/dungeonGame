@@ -4,5 +4,7 @@ class BasicSword extends Sword{
 		super();
 		damage = 50;
 		knockback = 4;
+		weaponName = "Basic Sword";
+		description = "An unremarkably unnotable sword.";
 	}
 }

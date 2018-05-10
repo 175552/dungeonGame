@@ -207,7 +207,7 @@ public class CreatorPanel extends GamePanels implements ActionListener, MouseLis
 
 		String fileName = JOptionPane.showInputDialog("Enter a file name.");		//Gets file name from JOptionPane popup.
 
-		File output = new File("../maps/" + fileName + ".png");
+		File output = new File("../maps/rooms/" + fileName + ".png");
 		try{
 			ImageIO.write(world, "png", output);									//Saves world image as .png file.
 		}catch(Exception e){}

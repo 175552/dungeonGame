@@ -9,10 +9,20 @@ abstract class Weapons extends Equipment {
 
 	int chargeTime, maxChargeTime;
 
+	String weaponName, description;
+
 	boolean canAttackWhileMoving;
 
 	WeaponHitboxes getHitboxes(){
 		return hb;
+	}
+
+	String getName(){
+		return weaponName;
+	}
+
+	String getDescription(){
+		return description;
 	}
 
 	double getSpeedMod(){

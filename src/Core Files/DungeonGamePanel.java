@@ -6,6 +6,8 @@ import javax.swing.JComponent;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.BasicStroke;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -363,7 +365,9 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		if(!(getPlayer().getHP() < 0)){
+			drawUI(g);
 			World.getCurrentRoom().drawRoom(g, this);
+			drawMinimap(g);
 			getPlayer().getAnimation().drawAnimation(g, getPlayer().getX() - getPlayer().getXOffset(),
 															getPlayer().getY() - getPlayer().getYOffset(), 50, 50, this);
 			drawEnemies(g);
@@ -397,7 +401,6 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 
 	private void setupCurrentRoom(){
-		System.out.println(World.xRoomCount/2 + ", " + World.currentY);
 		try{
 			Scanner input = new Scanner(new File(World.rooms[World.currentX][World.currentY].getFilePath()));
 			for(int a = 0; a < World.worldHeight; a++){
@@ -423,6 +426,47 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 			Enemies temp = getCurrentEnemies().get(i);
 			temp.getAnimation().drawAnimation(g, temp.getX() - temp.getXOffset(), temp.getY() - temp.getYOffset(), 50, 50, this);
 		}
+	}
+
+	private void drawMinimap(Graphics g){
+		Graphics2D g2 = (Graphics2D)g.create();
+		g2.setColor(Color.white);
+		int[] worldBounds = World.getWorldSize();
+		int mapXPos = 1360, mapYPos = 100, roomLength = World.worldLength * 3, roomHeight = World.worldHeight * 3;
+		for(int y = 0; y < worldBounds[1]; y++){
+			for(int x = 0; x < worldBounds[0]; x++){
+				if(World.rooms[x][y] != null && World.rooms[x][y].isDiscovered()){
+					if(World.currentX == x && World.currentY == y){
+						g2.setStroke(new BasicStroke(3.0f));
+						g2.drawRect(mapXPos + (roomLength * x), mapYPos + (roomHeight * y),
+										roomLength, roomHeight);
+						g2.setStroke(new BasicStroke(1.0f));
+					}
+					else{
+						g2.drawRect(mapXPos + (roomLength * x), mapYPos + (roomHeight * y),
+										roomLength, roomHeight);
+					}
+				}
+			}
+		}
+		g2.dispose();
+	}
+
+	private void drawUI(Graphics g){
+		Graphics2D g2 = (Graphics2D)g.create();
+		g2.setColor(Color.black);
+		g2.fillRect(0, 0, GameFrame.getXSize(), GameFrame.getYSize());
+		g2.setColor(Color.white);
+		g2.setStroke(new BasicStroke(4.0f));
+		g2.drawRect((World.worldLength * World.cellSize) + 1, 0,
+						GameFrame.getXSize() - ((World.worldLength * World.cellSize) + 1), (World.worldHeight * World.cellSize));
+		g2.drawRect(0, (World.worldHeight * World.cellSize) + 1, GameFrame.getXSize() - 3,
+							GameFrame.getYSize() - ((World.worldHeight * World.cellSize) + 1));
+		g2.drawLine(World.worldLength * World.cellSize, 300, 1700, 300);
+		String weaponName = getPlayer().getWeapon().getName();
+		g2.setFont(new Font("Times New Roman", Font.PLAIN, 25));
+		g2.drawString(weaponName, (World.worldLength * World.cellSize) + 20, 350);
+		g2.dispose();
 	}
 
 }

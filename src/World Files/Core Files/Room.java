@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 public class Room{
 	String filePath;
 	int doorCount;
+	boolean enterable = true, discovered = false;
 	boolean[] doorLocations;				//[Up, Down, Left, Right], if true, a door generates there. Else no door.
 
 	Cell[][] roomIDs = new Cell[World.worldLength][World.worldHeight];
@@ -40,6 +41,22 @@ public class Room{
 				}
 			}
 		}
+	}
+
+	void makeUnenterable(){
+		enterable = false;
+	}
+
+	void discover(){
+		discovered = true;
+	}
+
+	boolean isEnterable(){
+		return enterable;
+	}
+
+	boolean isDiscovered(){
+		return discovered;
 	}
 
 	boolean checkUp(){
