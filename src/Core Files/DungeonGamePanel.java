@@ -311,7 +311,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 
 			/////////////Methods to be run when enemy is hit
 			if(getPlayer().getAttackHitbox().intersects(bounds[0] - bounds[2], bounds[1] - bounds[3], bounds[2] * 2, bounds[3] * 2)){
-				getCurrentEnemies().get(i).loseHP(getPlayer().getWeapon().getDamage());	//Do damage to hit enemy
+				getCurrentEnemies().get(i).loseHP(getPlayer().calculateDamage());	//Do damage to hit enemy
 				getCurrentEnemies().get(i).hit(getPlayer());
 			}
 
@@ -321,7 +321,7 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 				////////////////////Methods to run when player is hit
 				if(getCurrentEnemies().get(i).getAttackHitbox().intersects(pBounds[0] - pBounds[2],
 					pBounds[1] - pBounds[3], pBounds[2] * 2, pBounds[3] * 2)){
-					getPlayer().loseHP(getCurrentEnemies().get(i).getWeapon().getDamage());
+					getPlayer().loseHP(getCurrentEnemies().get(i).calculateDamage());
 					getPlayer().hit(getCurrentEnemies().get(i));
 				}
 			}
@@ -455,18 +455,46 @@ public class DungeonGamePanel extends GamePanels implements ActionListener{
 	private void drawUI(Graphics g){
 		Graphics2D g2 = (Graphics2D)g.create();
 		g2.setColor(Color.black);
-		g2.fillRect(0, 0, GameFrame.getXSize(), GameFrame.getYSize());
+		g2.fillRect(0, 0, GameFrame.getXSize(), GameFrame.getYSize());		//Background color
+
 		g2.setColor(Color.white);
 		g2.setStroke(new BasicStroke(4.0f));
-		g2.drawRect((World.worldLength * World.cellSize) + 1, 0,
+		g2.drawRect((World.worldLength * World.cellSize) + 1, 0,			//UI Boxes
 						GameFrame.getXSize() - ((World.worldLength * World.cellSize) + 1), (World.worldHeight * World.cellSize));
 		g2.drawRect(0, (World.worldHeight * World.cellSize) + 1, GameFrame.getXSize() - 3,
 							GameFrame.getYSize() - ((World.worldHeight * World.cellSize) + 1));
-		g2.drawLine(World.worldLength * World.cellSize, 300, 1700, 300);
-		String weaponName = getPlayer().getWeapon().getName();
-		g2.setFont(new Font("Times New Roman", Font.PLAIN, 25));
-		g2.drawString(weaponName, (World.worldLength * World.cellSize) + 20, 350);
+		g2.drawLine(World.worldLength * World.cellSize, 300, 1700, 300);	//Seperates one of the boxes into two sections
+
+
+		String weaponName = getPlayer().getWeapon().getName();				//Gets the name of the weapon the player is using.
+		g2.setFont(new Font("Times New Roman", Font.BOLD, 25));
+		g2.drawString(weaponName, (World.worldLength * World.cellSize) + 10, 350);
+		g2.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		g2.drawString("Base Damage: " + getPlayer().getWeapon().getDamage(), (World.worldLength * World.cellSize) + 10, 380);
+
+		int sigATK = 0, sigDEF = 0;
+		for(int i = 0; i < getPlayer().getInventory().size(); i++){
+			sigATK += getPlayer().getInventory().get(i).getATK();
+			sigDEF += getPlayer().getInventory().get(i).getDEF();
+		}
+		if(sigATK > 0){
+			g2.setColor(Color.green);
+		}
+		else if(sigATK < 0){
+			g2.setColor(Color.red);
+		}
+		g2.drawString("ATK: " + sigATK, (World.worldLength * World.cellSize) + 10, 405);
+		g2.setColor(Color.white);
+		if(sigDEF > 0){
+			g2.setColor(Color.green);
+		}
+		else if(sigDEF < 0){
+			g2.setColor(Color.red);
+		}
+		g2.drawString("DEF: " + sigDEF, (World.worldLength * World.cellSize) + 150, 405);
 		g2.dispose();
+
+		getPlayer().drawPlayerItems(g, this);
 	}
 
 }

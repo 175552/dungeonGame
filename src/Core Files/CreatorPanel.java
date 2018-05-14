@@ -51,7 +51,7 @@ public class CreatorPanel extends GamePanels implements ActionListener, MouseLis
 				exampleIcons[i][a] = new JButton();
 				exampleIcons[i][a].setBorderPainted(false);
 				exampleIcons[i][a].setActionCommand("Selection " + (i + 1));
-				exampleIcons[i][a].setBounds(50, 50 + (120 * i), 100, 100);
+				exampleIcons[i][a].setBounds(50, 80 + (120 * i), 75, 75);
 				exampleIcons[i][a].addActionListener(this);
 
 				try{
@@ -189,6 +189,11 @@ public class CreatorPanel extends GamePanels implements ActionListener, MouseLis
 		g.fillRect(0, 0, 200, GameFrame.getYSize());
 		g.setColor(Color.white);
 		g.fillRect(45, 745, 110, 110);
+		for(int a = 0; a < pageCount; a++){
+			for(int i = 0; i < iconCount; i++){
+
+			}
+		}
 	}
 	//////////////////////////////////////////////////////////////////////////Stuff for saving world in an image
 	private void saveWorld(){

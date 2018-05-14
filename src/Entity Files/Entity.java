@@ -13,7 +13,7 @@ abstract class Entity implements ActionListener {
 
 	boolean attacksUp, attacksDown, attacksLeft, attacksRight, xMove, yMove;
 
-	boolean hit, stunned, attacking; //Effect booleans
+	boolean hit, stunned, attacking, invulnerable; //Effect booleans
 
 	Animation sprite;
 
@@ -121,6 +121,9 @@ abstract class Entity implements ActionListener {
 	}
 	Weapons getWeapon(){
 		return activeWeapon;
+	}
+	ArrayList<Equipment> getInventory(){
+		return inventory;
 	}
 	abstract Timer getAttackTimer();
 //////////////////////////////////////////////////////////////////////////Movement methods
@@ -287,7 +290,14 @@ abstract class Entity implements ActionListener {
 		HP -= lostHP;
 	}
 
-	void hit(Entity attacker){				//Handles what happens when an entity is hit
+	int calculateDamage(){
+		int damage = activeWeapon.getDamage();
+		damage -= DEF;
+		damage += ATK;
+		return damage;
+	}
+
+	void hit(Entity attacker){				//Handles what happens when an entity is hit, attacker being the entity attacking this entity
 		hit = true;
 		stunned = true;						//Entity is stunned
 		int knockback = activeWeapon.getKnockback(), xRes, yRes;

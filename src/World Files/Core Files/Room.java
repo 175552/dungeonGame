@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class Room{
+
+	static int roomLength = World.cellSize * World.worldLength, roomHeight = World.cellSize * World.worldLength;
+
 	String filePath;
 	int doorCount;
 	boolean enterable = true, discovered = false;

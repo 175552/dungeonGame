@@ -14,7 +14,7 @@ public class Enemies extends Entity{
 
 	int aggroRange = 250, holdAggroRange = 400, currentTime = 0, maxTime, waitTime = 1000;
 
-	Timer hesitationDelay = new Timer(750, this), eAtkTimer = new Timer(1000/World.framerate, this), wait = new Timer(waitTime, this);
+	Timer hesitationDelay = new Timer(400, this), eAtkTimer = new Timer(1000/World.framerate, this), wait = new Timer(waitTime, this);
 
 	Enemies(int x, int y){
 		try{
