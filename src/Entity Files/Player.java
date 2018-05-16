@@ -60,14 +60,14 @@ public class Player extends Entity{
 
 	void setEquipmentImages(){
 		try{
-			head = ImageIO.read(new File("../resources/lib/items/defPlayHead.png"));
-			lArm = ImageIO.read(new File("../resources/lib/items/defPlayLeftArm.png"));
-			rArm = ImageIO.read(new File("../resources/lib/items/defPlayRightArm.png"));
-			chest = ImageIO.read(new File("../resources/lib/items/defPlayChest.png"));
-			lLeg = ImageIO.read(new File("../resources/lib/items/defPlayLeftLeg.png"));
-			rLeg = ImageIO.read(new File("../resources/lib/items/defPlayRightLeg.png"));
-			rSlot1 = ImageIO.read(new File("../resources/lib/items/defPlayRing1.png"));
-			rSlot2 = ImageIO.read(new File("../resources/lib/items/defPlayRing2.png"));
+			head = ImageIO.read(new File("../resources/lib/items/default/defPlayHead.png"));
+			lArm = ImageIO.read(new File("../resources/lib/items/default/defPlayLeftArm.png"));
+			rArm = ImageIO.read(new File("../resources/lib/items/default/defPlayRightArm.png"));
+			chest = ImageIO.read(new File("../resources/lib/items/default/defPlayChest.png"));
+			lLeg = ImageIO.read(new File("../resources/lib/items/default/defPlayLeftLeg.png"));
+			rLeg = ImageIO.read(new File("../resources/lib/items/default/defPlayRightLeg.png"));
+			rSlot1 = ImageIO.read(new File("../resources/lib/items/default/defPlayRing1.png"));
+			rSlot2 = ImageIO.read(new File("../resources/lib/items/default/defPlayRing2.png"));
 		}catch(Exception e){}
 	}
 
@@ -80,7 +80,7 @@ public class Player extends Entity{
 		g.drawImage(rLeg, 1430, 590, 40, 80, p);//Right Leg
 		g.drawImage(rSlot1, 1300, 750, 25, 25, p);//Ring Slot 1
 		g.drawImage(rSlot2, 1330, 750, 25, 25, p);//Ring Slot 2
-		g.drawImage(activeWeapon.getSprite(), 1500, 700, 75, 75, p);//Weapon
+		g.drawImage(activeWeapon.getSprite(), 1500, 330, 75, 50, p);//Weapon
 	}
 
 	void setupEffectTimers(){

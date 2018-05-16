@@ -80,9 +80,6 @@
 			<folderitem>
 				<path>src\Core Files</path>
 			</folderitem>
-			<folderitem>
-				<path>src\Core Files\Utility Files</path>
-			</folderitem>
 			<fileitem>
 				<path>src\World Files\Core Files\Cell.java</path>
 				<folder>src\World Files\Core Files</folder>
